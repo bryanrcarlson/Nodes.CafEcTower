@@ -33,9 +33,9 @@ namespace Nsar.Nodes.CafEcTower.LoggerNet.Tests
         public void GetRecords_ValidContent_ReturnsCorrectDataRecords()
         {
             //# Arrange
-            List<MeteorologyRecord> records = new List<MeteorologyRecord>();
+            List<MeteorologyObservation> actualRecords = new List<MeteorologyObservation>();
 
-            MeteorologyRecord expectedRecord = new MeteorologyRecord()
+            MeteorologyObservation expectedRecord = new MeteorologyObservation()
             {
                 TIMESTAMP = new System.DateTime(2017, 6, 20, 11, 30, 00),
                 RECORD = 15,
@@ -55,13 +55,73 @@ namespace Nsar.Nodes.CafEcTower.LoggerNet.Tests
 
             //# Act
             MeteorologyCsvTableExtractor sut = new MeteorologyCsvTableExtractor(pathToFileWithValidContent);
-            records = sut.GetRecords();
+            actualRecords = sut.GetRecords();
 
             //# Assert
             // TODO: Override obj.Equals for better test
-            Assert.Equal(expectedRecord.amb_press_Avg, records[1].amb_press_Avg);
-            Assert.Equal(expectedRecord.RECORD, records[1].RECORD);
-            Assert.Equal(expectedRecord.Rn_meas_Avg, records[1].Rn_meas_Avg);
+            Assert.Equal(expectedRecord.amb_press_Avg, actualRecords[1].amb_press_Avg);
+            Assert.Equal(expectedRecord.RECORD, actualRecords[1].RECORD);
+            Assert.Equal(expectedRecord.Rn_meas_Avg, actualRecords[1].Rn_meas_Avg);
+        }
+        
+        [Fact]
+        public void GetMetadata_ValidContent_ReturnsCorrectMetadata()
+        {
+            //# Arrange
+            MeteorologyMetadata actualMetadata = new MeteorologyMetadata();
+            MeteorologyMetadata expectedMetadata = new MeteorologyMetadata()
+            {
+                FileFormat = "TOA5",
+                StationName = "LTAR_CookEast",
+                DataLoggerType = "CR3000",
+                SerialNumber = 6503,
+                OperatingSystemVersion = "CR3000.Std.31",
+                DataloggerProgramName = "CPU:DEFAULT.CR3",
+                DataloggerProgramSignature = 13636,
+                TableName = "LTAR_Met",
+
+                Variables = new List<MeteorologyVariables>()
+                {
+                    new MeteorologyVariables()
+                    {
+                        FieldName = "TIMESTAMP",
+                        Units = "TS",
+                        Processing = ""
+                    },
+                    new MeteorologyVariables()
+                    {
+                        FieldName = "amb_tmpr_Avg",
+                        Units = "C",
+                        Processing = "Avg"
+                    },
+                    new MeteorologyVariables()
+                    {
+                        FieldName = "Rn_meas_Avg",
+                        Units = "W/m^2",
+                        Processing = "Avg"
+                    }
+                }
+            };
+
+            //# Act
+            MeteorologyCsvTableExtractor sut = new MeteorologyCsvTableExtractor(pathToFileWithValidContent);
+            actualMetadata = sut.GetMetadata();
+
+            //# Assert
+            // TODO: Override obj.Equals for better testing
+            Assert.Equal(expectedMetadata.FileFormat, actualMetadata.FileFormat);
+            Assert.Equal(expectedMetadata.TableName, actualMetadata.TableName);
+            Assert.Equal(expectedMetadata.SerialNumber, actualMetadata.SerialNumber);
+
+            Assert.Equal(
+                expectedMetadata.Variables.Find(mv => mv.FieldName == "TIMESTAMP").Processing,
+                actualMetadata.Variables.Find(mv => mv.FieldName == "TIMESTAMP").Processing);
+            Assert.Equal(
+                expectedMetadata.Variables.Find(mv => mv.FieldName == "amb_tmpr_Avg").Units,
+                actualMetadata.Variables.Find(mv => mv.FieldName == "amb_tmpr_Avg").Units);
+            Assert.Equal(
+                expectedMetadata.Variables.Find(mv => mv.FieldName == "Rn_meas_Avg").Units,
+                actualMetadata.Variables.Find(mv => mv.FieldName == "Rn_meas_Avg").Units);
         }
     }
 }

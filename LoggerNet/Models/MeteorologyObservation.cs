@@ -4,7 +4,7 @@ using System.Text;
 
 namespace Nsar.Nodes.CafEcTower.LoggerNet.Models
 {
-    public class MeteorologyRecord
+    public class MeteorologyObservation
     {
         public DateTime TIMESTAMP { get; set; }
         public int RECORD { get; set; }
