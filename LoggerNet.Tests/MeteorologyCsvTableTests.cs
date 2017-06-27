@@ -30,7 +30,7 @@ namespace Nsar.Nodes.CafEcTower.LoggerNet.Tests
         }
 
         [Fact]
-        public void GetRecords_ValidContent_ReturnsCorrectData()
+        public void GetRecords_ValidContent_ReturnsCorrectDataRecords()
         {
             //# Arrange
             List<MeteorologyRecord> records = new List<MeteorologyRecord>();
@@ -58,8 +58,10 @@ namespace Nsar.Nodes.CafEcTower.LoggerNet.Tests
             records = sut.GetRecords();
 
             //# Assert
-            // TODO: Override obj.Equals
+            // TODO: Override obj.Equals for better test
             Assert.Equal(expectedRecord.amb_press_Avg, records[1].amb_press_Avg);
+            Assert.Equal(expectedRecord.RECORD, records[1].RECORD);
+            Assert.Equal(expectedRecord.Rn_meas_Avg, records[1].Rn_meas_Avg);
         }
     }
 }

@@ -1,7 +1,10 @@
-﻿using LoggerNet.Models;
+﻿using CsvHelper;
+using LoggerNet.Models;
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
+using System.Text;
 
 namespace Nsar.Nodes.CafEcTower.LoggerNet.Extract
 {
@@ -48,7 +51,37 @@ namespace Nsar.Nodes.CafEcTower.LoggerNet.Extract
 
         public List<MeteorologyRecord> GetRecords()
         {
-            return null;
+            if (this.fileContent.Length <= 0) throw new Exception("No content");
+
+            List<MeteorologyRecord> records = new List<MeteorologyRecord>();
+
+            using (TextReader sr = new StringReader(trimMetaData(this.fileContent)))
+            {
+                CsvReader csv = new CsvReader(sr);
+                csv.Configuration.HasHeaderRecord = true;
+                csv.Configuration.IgnoreQuotes = false;
+
+                records = csv.GetRecords<MeteorologyRecord>().ToList();
+            }
+
+            return records;
+        }
+
+        private string trimMetaData(string fileContent)
+        {
+            StringBuilder trimmed = new StringBuilder();
+
+            using (StringReader sr = new StringReader(fileContent))
+            {
+                sr.ReadLine();  // skip first line of meta data
+                trimmed.AppendLine(sr.ReadLine());  // read header
+                sr.ReadLine();  // skip units row
+                sr.ReadLine();  // skip statistics row
+
+                trimmed.Append(sr.ReadToEnd()); // read all records
+            }
+
+            return trimmed.ToString();
         }
     }
 }
