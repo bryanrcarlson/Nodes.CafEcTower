@@ -55,7 +55,7 @@ namespace Nsar.Nodes.CafEcTower.LoggerNet.Tests
 
             //# Act
             MeteorologyCsvTableExtractor sut = new MeteorologyCsvTableExtractor(pathToFileWithValidContent);
-            actualRecords = sut.GetRecords();
+            actualRecords = sut.GetObservations();
 
             //# Assert
             // TODO: Override obj.Equals for better test

@@ -49,7 +49,7 @@ namespace Nsar.Nodes.CafEcTower.LoggerNet.Extract
             this.fileName = fileName;
         }
 
-        public List<MeteorologyObservation> GetRecords()
+        public List<MeteorologyObservation> GetObservations()
         {
             if (this.fileContent.Length <= 0) throw new Exception("No content");
 
@@ -78,14 +78,14 @@ namespace Nsar.Nodes.CafEcTower.LoggerNet.Extract
             {
                 string[] fileMeta = sr.ReadLine().Replace("\"", "").Split(',');
 
-                md.FileFormat                   =   fileMeta[0];
+                md.FileFormat                   =    fileMeta[0];
                 md.StationName                  =    fileMeta[1];
                 md.DataLoggerType               =    fileMeta[2];
                 md.SerialNumber                 =    Convert.ToInt32(fileMeta[3]);
                 md.OperatingSystemVersion       =    fileMeta[4];
                 md.DataloggerProgramName        =    fileMeta[5];
                 md.DataloggerProgramSignature   =    Convert.ToInt32(fileMeta[6]);
-                md.TableName                    =   fileMeta[7];
+                md.TableName                    =    fileMeta[7];
 
                 string[] fieldNames = sr.ReadLine().Replace("\"", "").Split(',');
                 string[] units = sr.ReadLine().Replace("\"", "").Split(',');
@@ -109,6 +109,15 @@ namespace Nsar.Nodes.CafEcTower.LoggerNet.Extract
             return md;
         }
 
+        public MeteorologyRecord GetRecord()
+        {
+            MeteorologyRecord record = new MeteorologyRecord();
+
+            record.Metadata = GetMetadata();
+            record.Observations = GetObservations();
+
+            return record;
+        }
         private string trimMetaData(string fileContent)
         {
             StringBuilder trimmed = new StringBuilder();

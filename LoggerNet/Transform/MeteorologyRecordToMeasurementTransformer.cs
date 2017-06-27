@@ -6,6 +6,6 @@ namespace Nsar.Nodes.CafEcTower.LoggerNet.Transform
 {
     public class MeteorologyRecordToMeasurementTransformer
     {
-
+        //public List<Measurement> ToMeasurements
     }
 }
