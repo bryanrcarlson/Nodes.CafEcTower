@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace LoggerNet.Models
+namespace Nsar.Nodes.CafEcTower.LoggerNet.Models
 {
     public class MeteorologyRecord
     {

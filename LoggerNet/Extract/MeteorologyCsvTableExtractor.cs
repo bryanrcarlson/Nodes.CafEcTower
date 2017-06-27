@@ -1,5 +1,5 @@
 ﻿using CsvHelper;
-using LoggerNet.Models;
+using Nsar.Nodes.CafEcTower.LoggerNet.Models;
 using System;
 using System.Collections.Generic;
 using System.IO;
