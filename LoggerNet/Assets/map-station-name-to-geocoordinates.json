@@ -1,0 +1,25 @@
+﻿/* TODO: Move this to a CAF-wide repo with other mapping objects, variables, etc */
+{
+  "stations": [
+    {
+      "name": "LTAR_CookEast",
+      "lat": 46.7815,
+      "lon": -117.0820
+    },
+    {
+      "name": "LTAR_CookWest",
+      "lat": 46.7840,
+      "lon": -117.0908
+    },
+    {
+      "name": "LTAR_BoydNorth",
+      "lat": 0,
+      "lon": 0
+    },
+    {
+      "name": "LTAR_BoydSouth",
+      "lat": 0,
+      "lon": 0
+    }
+  ]
+}

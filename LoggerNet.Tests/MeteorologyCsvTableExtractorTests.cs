@@ -5,11 +5,11 @@ using Nsar.Nodes.CafEcTower.LoggerNet.Models;
 
 namespace Nsar.Nodes.CafEcTower.LoggerNet.Tests
 {
-    public class MeteorologyCsvTableTests
+    public class MeteorologyCsvTableExtractorTests
     {
         private readonly string pathToFileWithValidContent;
 
-        public MeteorologyCsvTableTests()
+        public MeteorologyCsvTableExtractorTests()
         {
             pathToFileWithValidContent = @"Assets/CookEastEcTower_Met_Raw_2017_06_20_1115.dat";
         }

@@ -7,8 +7,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LoggerNet", "LoggerNet\Logg
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LoggerNet.Tests", "LoggerNet.Tests\LoggerNet.Tests.csproj", "{931AB7E4-4368-4149-9BBB-D84246B9496C}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Common.UnitOfMeasure", "..\..\Common\UnitOfMeasure\Common.UnitOfMeasure.csproj", "{254363C2-ABF0-4342-93DD-74908AD94281}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -23,10 +21,6 @@ Global
 		{931AB7E4-4368-4149-9BBB-D84246B9496C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{931AB7E4-4368-4149-9BBB-D84246B9496C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{931AB7E4-4368-4149-9BBB-D84246B9496C}.Release|Any CPU.Build.0 = Release|Any CPU
-		{254363C2-ABF0-4342-93DD-74908AD94281}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{254363C2-ABF0-4342-93DD-74908AD94281}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{254363C2-ABF0-4342-93DD-74908AD94281}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{254363C2-ABF0-4342-93DD-74908AD94281}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
