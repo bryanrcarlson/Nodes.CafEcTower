@@ -72,7 +72,7 @@ namespace Nsar.Nodes.CafEcTower.LoggerNet.Extract
             if (this.fileContent.Length <= 0) throw new Exception("No content");
 
             MeteorologyMetadata md = new MeteorologyMetadata();
-            md.Variables = new List<MeteorologyVariables>();
+            md.Variables = new List<MeteorologyVariable>();
 
             using (StringReader sr = new StringReader(this.fileContent))
             {
@@ -97,7 +97,7 @@ namespace Nsar.Nodes.CafEcTower.LoggerNet.Extract
                 for(int col = 0; col < fieldNames.Length; col++)
                 {
                     md.Variables.Add(
-                        new MeteorologyVariables()
+                        new MeteorologyVariable()
                         {
                             FieldName = fieldNames[col],
                             Units = units[col],

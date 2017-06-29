@@ -4,7 +4,7 @@ using System.Text;
 
 namespace Nsar.Nodes.CafEcTower.LoggerNet.Models
 {
-    public class MeteorologyVariables
+    public class MeteorologyVariable
     {
         public string FieldName { get; set; }
         public string Units { get; set; }

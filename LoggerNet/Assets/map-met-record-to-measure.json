@@ -1,0 +1,19 @@
+﻿// met record variables: https://www.biometeorology.umn.edu/sites/biometeorology.umn.edu/files/eddycovariance_rawdata_metafile.pdf
+  //https://s.campbellsci.com/documents/ca/manuals/easyflux-dl_man.pdf
+// Measure variables: "Ts" = "Time Step"; "Avg", "Accum", etc indicate processing over the time step
+{
+  "TIMESTAMP": "DateTime",
+  "RECORD": "RecordNumber",
+  "amb_tmpr_Avg": "TemperatureAirTsAvg",
+  "rslt_wnd_spd": "WindSpeedTsResultant",
+  "wnd_dir_compass": "WindDirection", // Not sure if this is a point measurement or was processed
+  "RH_Avg": "RelativeHumidityTsAvg",
+  "Precipitation_Tot": "PrecipitationTsAccum",
+  "amb_press_Avg": "PressureAirTsAvg",
+  "PAR_density_Avg": "ParDensityTsAvg",
+  "batt_volt_Avg": "BatteryVoltageTsAvg",
+  "panel_tmpr_Avg": "TemperaturePanelTsAvg",
+  "std_wnd_dir": "WindDirectionTsStdDev",
+  "VPD_air": "VaporPressureDeficitAir",
+  "Rn_meas_Avg": "NetRadiationTsAvg"
+}

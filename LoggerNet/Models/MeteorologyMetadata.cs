@@ -15,6 +15,6 @@ namespace Nsar.Nodes.CafEcTower.LoggerNet.Models
         public int      DataloggerProgramSignature  { get; set; }
         public string   TableName                   { get; set; }
 
-        public List<MeteorologyVariables> Variables { get; set; }
+        public List<MeteorologyVariable> Variables { get; set; }
     }
 }
