@@ -1,7 +1,7 @@
 ﻿using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using Nsar.Common.Measure.Models;
-using Nsar.Nodes.Models.LoggerNet;
+using Nsar.Nodes.Models.LoggerNet.Meteorology;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -11,12 +11,12 @@ using System.Reflection;
 
 namespace Nsar.Nodes.CafEcTower.LoggerNet.Transform
 {
-    public class MeteorologyRecordToMeasurementTransformer
+    public class DocumentDbMeasurementTransformer
     {
         private readonly string stationsMap;
         private readonly Dictionary<string, string> mapDataFieldsToMeasurementName;
 
-        public MeteorologyRecordToMeasurementTransformer()
+        public DocumentDbMeasurementTransformer()
         {
             //TODO: Error checking
 
@@ -26,13 +26,13 @@ namespace Nsar.Nodes.CafEcTower.LoggerNet.Transform
             string measurementMap = File.ReadAllText(@"Assets/map-met-record-to-measure.json");
             this.mapDataFieldsToMeasurementName = JsonConvert.DeserializeObject<Dictionary<string, string>>(measurementMap);
         }
-        public List<Measurement> ToMeasurements(MeteorologyRecord record)
+        public List<Measurement> ToMeasurements(Meteorology record)
         {
             List<Measurement> measurements = new List<Measurement>();
 
-            foreach(MeteorologyObservation obs in record.Observations)
+            foreach(Observation obs in record.Observations)
             {
-                foreach(MeteorologyVariable variable in record.Metadata.Variables)
+                foreach(Variable variable in record.Metadata.Variables)
                 {
                     // Skip TIMESTAMP and RECORD
                     if (variable.FieldName == "TIMESTAMP" ||

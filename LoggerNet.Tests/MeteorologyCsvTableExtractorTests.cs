@@ -1,7 +1,7 @@
 using Xunit;
 using Nsar.Nodes.CafEcTower.LoggerNet.Extract;
 using System.Collections.Generic;
-using Nsar.Nodes.Models.LoggerNet;
+using Nsar.Nodes.Models.LoggerNet.Meteorology;
 
 namespace Nsar.Nodes.CafEcTower.LoggerNet.Tests
 {
@@ -30,12 +30,12 @@ namespace Nsar.Nodes.CafEcTower.LoggerNet.Tests
         }
 
         [Fact]
-        public void GetRecords_ValidContent_ReturnsCorrectDataRecords()
+        public void GetObservations_ValidContent_ReturnsCorrectObservations()
         {
             //# Arrange
-            List<MeteorologyObservation> actualRecords = new List<MeteorologyObservation>();
+            List<Observation> actualObservations = new List<Observation>();
 
-            MeteorologyObservation expectedRecord = new MeteorologyObservation()
+            Observation expectedRecord = new Observation()
             {
                 TIMESTAMP = new System.DateTime(2017, 6, 20, 11, 30, 00),
                 RECORD = 15,
@@ -55,21 +55,21 @@ namespace Nsar.Nodes.CafEcTower.LoggerNet.Tests
 
             //# Act
             MeteorologyCsvTableExtractor sut = new MeteorologyCsvTableExtractor(pathToFileWithValidContent);
-            actualRecords = sut.GetObservations();
+            actualObservations = sut.GetObservations();
 
             //# Assert
             // TODO: Override obj.Equals for better test
-            Assert.Equal(expectedRecord.amb_press_Avg, actualRecords[1].amb_press_Avg);
-            Assert.Equal(expectedRecord.RECORD, actualRecords[1].RECORD);
-            Assert.Equal(expectedRecord.Rn_meas_Avg, actualRecords[1].Rn_meas_Avg);
+            Assert.Equal(expectedRecord.amb_press_Avg, actualObservations[1].amb_press_Avg);
+            Assert.Equal(expectedRecord.RECORD, actualObservations[1].RECORD);
+            Assert.Equal(expectedRecord.Rn_meas_Avg, actualObservations[1].Rn_meas_Avg);
         }
         
         [Fact]
         public void GetMetadata_ValidContent_ReturnsCorrectMetadata()
         {
             //# Arrange
-            MeteorologyMetadata actualMetadata = new MeteorologyMetadata();
-            MeteorologyMetadata expectedMetadata = new MeteorologyMetadata()
+            Metadata actualMetadata = new Metadata();
+            Metadata expectedMetadata = new Metadata()
             {
                 FileFormat = "TOA5",
                 StationName = "LTAR_CookEast",
@@ -80,87 +80,87 @@ namespace Nsar.Nodes.CafEcTower.LoggerNet.Tests
                 DataloggerProgramSignature = 13636,
                 TableName = "LTAR_Met",
 
-                Variables = new List<MeteorologyVariable>()
+                Variables = new List<Variable>()
                 {
-                    new MeteorologyVariable()
+                    new Variable()
                     {
                         FieldName = "TIMESTAMP",
                         Units = "TS",
                         Processing = ""
                     },
-                    new MeteorologyVariable()
+                    new Variable()
                     {
                         FieldName = "RECORD",
                         Units = "",
                         Processing = ""
                     },
-                    new MeteorologyVariable()
+                    new Variable()
                     {
                         FieldName = "amb_tmpr_Avg",
                         Units = "C",
                         Processing = "Avg"
                     },
-                    new MeteorologyVariable()
+                    new Variable()
                     {
                         FieldName = "rslt_wnd_spd",
                         Units = "m/s",
                         Processing = "Smp"
                     },
-                    new MeteorologyVariable()
+                    new Variable()
                     {
                         FieldName = "wnd_dir_compass",
                         Units = "degrees",
                         Processing = "Smp"
                     },
-                    new MeteorologyVariable()
+                    new Variable()
                     {
                         FieldName = "RH_Avg",
                         Units = "%",
                         Processing = "Avg"
                     },
-                    new MeteorologyVariable()
+                    new Variable()
                     {
                         FieldName = "Precipitation_Tot",
                         Units = "mm",
                         Processing = "Tot"
                     },
-                    new MeteorologyVariable()
+                    new Variable()
                     {
                         FieldName = "amb_press_Avg",
                         Units = "kPa",
                         Processing = "Avg"
                     },
-                    new MeteorologyVariable()
+                    new Variable()
                     {
                         FieldName = "PAR_density_Avg",
                         Units = "umol/(s m^2)",
                         Processing = "Avg"
                     },
-                    new MeteorologyVariable()
+                    new Variable()
                     {
                         FieldName = "batt_volt_Avg",
                         Units = "V",
                         Processing = "Avg"
                     },
-                    new MeteorologyVariable()
+                    new Variable()
                     {
                         FieldName = "panel_tmpr_Avg",
                         Units = "C",
                         Processing = "Avg"
                     },
-                    new MeteorologyVariable()
+                    new Variable()
                     {
                         FieldName = "std_wnd_dir",
                         Units = "degrees",
                         Processing = "Smp"
                     },
-                    new MeteorologyVariable()
+                    new Variable()
                     {
                         FieldName = "VPD_air",
                         Units = "kpa",
                         Processing = "Smp"
                     },
-                    new MeteorologyVariable()
+                    new Variable()
                     {
                         FieldName = "Rn_meas_Avg",
                         Units = "W/m^2",

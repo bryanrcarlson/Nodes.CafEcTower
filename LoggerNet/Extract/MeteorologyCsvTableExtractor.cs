@@ -1,5 +1,5 @@
 ﻿using CsvHelper;
-using Nsar.Nodes.Models.LoggerNet;
+using Nsar.Nodes.Models.LoggerNet.Meteorology;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -49,11 +49,11 @@ namespace Nsar.Nodes.CafEcTower.LoggerNet.Extract
             this.fileName = fileName;
         }
 
-        public List<MeteorologyObservation> GetObservations()
+        public List<Observation> GetObservations()
         {
             if (this.fileContent.Length <= 0) throw new Exception("No content");
 
-            List<MeteorologyObservation> records = new List<MeteorologyObservation>();
+            List<Observation> records = new List<Observation>();
 
             using (TextReader sr = new StringReader(trimMetaData(this.fileContent)))
             {
@@ -61,18 +61,18 @@ namespace Nsar.Nodes.CafEcTower.LoggerNet.Extract
                 csv.Configuration.HasHeaderRecord = true;
                 csv.Configuration.IgnoreQuotes = false;
 
-                records = csv.GetRecords<MeteorologyObservation>().ToList();
+                records = csv.GetRecords<Observation>().ToList();
             }
 
             return records;
         }
 
-        public MeteorologyMetadata GetMetadata()
+        public Metadata GetMetadata()
         {
             if (this.fileContent.Length <= 0) throw new Exception("No content");
 
-            MeteorologyMetadata md = new MeteorologyMetadata();
-            md.Variables = new List<MeteorologyVariable>();
+            Metadata md = new Metadata();
+            md.Variables = new List<Variable>();
 
             using (StringReader sr = new StringReader(this.fileContent))
             {
@@ -97,7 +97,7 @@ namespace Nsar.Nodes.CafEcTower.LoggerNet.Extract
                 for(int col = 0; col < fieldNames.Length; col++)
                 {
                     md.Variables.Add(
-                        new MeteorologyVariable()
+                        new Variable()
                         {
                             FieldName = fieldNames[col],
                             Units = units[col],
@@ -109,14 +109,14 @@ namespace Nsar.Nodes.CafEcTower.LoggerNet.Extract
             return md;
         }
 
-        public MeteorologyRecord GetRecord()
+        public Meteorology GetMeteorology()
         {
-            MeteorologyRecord record = new MeteorologyRecord();
+            Meteorology met = new Meteorology();
 
-            record.Metadata = GetMetadata();
-            record.Observations = GetObservations();
+            met.Metadata = GetMetadata();
+            met.Observations = GetObservations();
 
-            return record;
+            return met;
         }
         private string trimMetaData(string fileContent)
         {

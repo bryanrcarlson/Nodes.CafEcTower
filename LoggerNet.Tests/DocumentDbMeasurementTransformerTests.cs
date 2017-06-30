@@ -1,12 +1,12 @@
 ﻿using Nsar.Common.Measure.Models;
-using Nsar.Nodes.Models.LoggerNet;
+using Nsar.Nodes.Models.LoggerNet.Meteorology;
 using Nsar.Nodes.CafEcTower.LoggerNet.Transform;
 using System.Collections.Generic;
 using Xunit;
 
 namespace Nsar.Nodes.CafEcTower.LoggerNet.Tests
 {
-    public class MeteorologyRecordToMeasurementTransformerTests
+    public class DocumentDbMeasurementTransformerTests
     {
         [Fact]
         public void ToMeasurement_ValidData_ReturnCorrectMeasurements()
@@ -25,8 +25,8 @@ namespace Nsar.Nodes.CafEcTower.LoggerNet.Tests
             List<Measurement> actualMeasurements = new List<Measurement>();
 
             //# Act
-            MeteorologyRecordToMeasurementTransformer sut = new MeteorologyRecordToMeasurementTransformer();
-            actualMeasurements = sut.ToMeasurements(getMockMeteorologyRecord());
+            DocumentDbMeasurementTransformer sut = new DocumentDbMeasurementTransformer();
+            actualMeasurements = sut.ToMeasurements(getMockMeteorology());
 
             //# Assert
             Assert.Equal(
@@ -41,12 +41,12 @@ namespace Nsar.Nodes.CafEcTower.LoggerNet.Tests
                 expectedMeasurement_amb_tmpr_avg.PhysicalQuantity);
         }
 
-        private MeteorologyRecord getMockMeteorologyRecord()
+        private Meteorology getMockMeteorology()
         {
-            MeteorologyRecord record = new MeteorologyRecord();
+            Meteorology met = new Meteorology();
 
-            record.Observations = new List<MeteorologyObservation>();
-            record.Observations.Add(new  MeteorologyObservation()
+            met.Observations = new List<Observation>();
+            met.Observations.Add(new  Observation()
             {
                 TIMESTAMP = new System.DateTime(2017, 6, 20, 11, 30, 00),
                 RECORD = 15,
@@ -64,7 +64,7 @@ namespace Nsar.Nodes.CafEcTower.LoggerNet.Tests
                 Rn_meas_Avg = 643.2509
             });
 
-            record.Metadata = new MeteorologyMetadata()
+            met.Metadata = new Metadata()
             {
                 FileFormat = "TOA5",
                 StationName = "LTAR_CookEast",
@@ -75,87 +75,87 @@ namespace Nsar.Nodes.CafEcTower.LoggerNet.Tests
                 DataloggerProgramSignature = 13636,
                 TableName = "LTAR_Met",
 
-                Variables = new List<MeteorologyVariable>()
+                Variables = new List<Variable>()
                 {
-                    new MeteorologyVariable()
+                    new Variable()
                     {
                         FieldName = "TIMESTAMP",
                         Units = "TS",
                         Processing = ""
                     },
-                    new MeteorologyVariable()
+                    new Variable()
                     {
                         FieldName = "RECORD",
                         Units = "",
                         Processing = ""
                     },
-                    new MeteorologyVariable()
+                    new Variable()
                     {
                         FieldName = "amb_tmpr_Avg",
                         Units = "C",
                         Processing = "Avg"
                     },
-                    new MeteorologyVariable()
+                    new Variable()
                     {
                         FieldName = "rslt_wnd_spd",
                         Units = "m/s",
                         Processing = "Smp"
                     },
-                    new MeteorologyVariable()
+                    new Variable()
                     {
                         FieldName = "wnd_dir_compass",
                         Units = "degrees",
                         Processing = "Smp"
                     },
-                    new MeteorologyVariable()
+                    new Variable()
                     {
                         FieldName = "RH_Avg",
                         Units = "%",
                         Processing = "Avg"
                     },
-                    new MeteorologyVariable()
+                    new Variable()
                     {
                         FieldName = "Precipitation_Tot",
                         Units = "mm",
                         Processing = "Tot"
                     },
-                    new MeteorologyVariable()
+                    new Variable()
                     {
                         FieldName = "amb_press_Avg",
                         Units = "kPa",
                         Processing = "Avg"
                     },
-                    new MeteorologyVariable()
+                    new Variable()
                     {
                         FieldName = "PAR_density_Avg",
                         Units = "umol/(s m^2)",
                         Processing = "Avg"
                     },
-                    new MeteorologyVariable()
+                    new Variable()
                     {
                         FieldName = "batt_volt_Avg",
                         Units = "V",
                         Processing = "Avg"
                     },
-                    new MeteorologyVariable()
+                    new Variable()
                     {
                         FieldName = "panel_tmpr_Avg",
                         Units = "C",
                         Processing = "Avg"
                     },
-                    new MeteorologyVariable()
+                    new Variable()
                     {
                         FieldName = "std_wnd_dir",
                         Units = "degrees",
                         Processing = "Smp"
                     },
-                    new MeteorologyVariable()
+                    new Variable()
                     {
                         FieldName = "VPD_air",
                         Units = "kpa",
                         Processing = "Smp"
                     },
-                    new MeteorologyVariable()
+                    new Variable()
                     {
                         FieldName = "Rn_meas_Avg",
                         Units = "W/m^2",
@@ -164,7 +164,7 @@ namespace Nsar.Nodes.CafEcTower.LoggerNet.Tests
                 }
             };
 
-            return record;
+            return met;
         }
     }
 }
