@@ -1,5 +1,5 @@
 ﻿using Nsar.Common.Measure.Models;
-using Nsar.Nodes.CafEcTower.LoggerNet.Models;
+using Nsar.Nodes.Models.LoggerNet;
 using Nsar.Nodes.CafEcTower.LoggerNet.Transform;
 using System.Collections.Generic;
 using Xunit;

@@ -1,7 +1,7 @@
 using Xunit;
 using Nsar.Nodes.CafEcTower.LoggerNet.Extract;
 using System.Collections.Generic;
-using Nsar.Nodes.CafEcTower.LoggerNet.Models;
+using Nsar.Nodes.Models.LoggerNet;
 
 namespace Nsar.Nodes.CafEcTower.LoggerNet.Tests
 {
