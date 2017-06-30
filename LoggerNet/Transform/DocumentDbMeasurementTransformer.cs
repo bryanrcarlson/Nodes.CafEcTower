@@ -1,7 +1,8 @@
 ﻿using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
-using Nsar.Common.Measure.Models;
+//using Nsar.Common.Measure.Models;
 using Nsar.Nodes.Models.LoggerNet.Meteorology;
+using Nsar.Nodes.Models.DocumentDb.Measurement;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -26,13 +27,13 @@ namespace Nsar.Nodes.CafEcTower.LoggerNet.Transform
             string measurementMap = File.ReadAllText(@"Assets/map-met-record-to-measure.json");
             this.mapDataFieldsToMeasurementName = JsonConvert.DeserializeObject<Dictionary<string, string>>(measurementMap);
         }
-        public List<Measurement> ToMeasurements(Meteorology record)
+        public List<Measurement> ToMeasurements(Meteorology meteorology)
         {
             List<Measurement> measurements = new List<Measurement>();
 
-            foreach(Observation obs in record.Observations)
+            foreach(Observation obs in meteorology.Observations)
             {
-                foreach(Variable variable in record.Metadata.Variables)
+                foreach(Variable variable in meteorology.Metadata.Variables)
                 {
                     // Skip TIMESTAMP and RECORD
                     if (variable.FieldName == "TIMESTAMP" ||
@@ -42,15 +43,43 @@ namespace Nsar.Nodes.CafEcTower.LoggerNet.Transform
                     // Look up property based on string, get value
                     var value = obs.GetType().GetProperty(variable.FieldName).GetValue(obs, null);
 
+                    Measurement measurement = getMeasurementWithDefaultValues();
+                    Common.Measure.Models.PhysicalQuantity pq = new Common.Measure.Models.PhysicalQuantity(
+                        Convert.ToDecimal(value),
+                        variable.Units);
+                    Common.Measure.PhysicalQuantityConverter pqConverter = new Common.Measure.PhysicalQuantityConverter();
+                    Common.Measure.Models.PhysicalQuantity pqMetric = pqConverter.Convert(pq);
+                    measurement.Name = getMeasurementNameFromFieldName(variable.FieldName);
+                    measurement.MeasurementDateTime = obs.TIMESTAMP;
+                    measurement.PhysicalQuantities.Add(
+                        new PhysicalQuantity(pqMetric.Value, pqMetric.Unit, pqMetric.Precision)
+                        {
+                            QcAppliedCode = 0,
+                            QcResultCode = 0,
+                            QualityCode = 0,
+                            SourceId = "DocumentDbMeasurementTransformer",
+                            SubmissionDateTime = DateTime.Now
+                        });
+                    measurement.Location = new Location()
+                    {
+                        Type = "Point",
+                        Coordinates = new List<double>()
+                        {
+                            getLatFromStation(meteorology.Metadata.StationName),
+                            getLonFromStation(meteorology.Metadata.StationName)
+                        }
+                    };
+                    measurement.FieldId = meteorology.Metadata.StationName;
+
                     // TODO: Unit conversion?
-                    Measurement measurement = new Measurement(
-                        getMeasurementNameFromFieldName(variable.FieldName),
-                        obs.TIMESTAMP,
-                        getLatFromStation(record.Metadata.StationName),
-                        getLonFromStation(record.Metadata.StationName),
-                        new PhysicalQuantity(
-                            Convert.ToDouble(value),
-                            variable.Units));
+                    //Measurement measurement = new Measurement(
+                    //    getMeasurementNameFromFieldName(variable.FieldName),
+                    //    obs.TIMESTAMP,
+                    //    getLatFromStation(record.Metadata.StationName),
+                    //    getLonFromStation(record.Metadata.StationName),
+                    //    new PhysicalQuantity(
+                    //        Convert.ToDouble(value),
+                    //        variable.Units));
 
                     measurements.Add(measurement);
                 }
@@ -85,6 +114,19 @@ namespace Nsar.Nodes.CafEcTower.LoggerNet.Transform
         private string getMeasurementNameFromFieldName(string fieldName)
         {
             return mapDataFieldsToMeasurementName[fieldName];
+        }
+
+        private Measurement getMeasurementWithDefaultValues()
+        {
+            Measurement measurement = new Measurement();
+
+            measurement.Type = "Measurement";
+            measurement.MetadataId = "";
+            measurement.SchemaVersion = "0.1.0";
+
+            measurement.PhysicalQuantities = new List<PhysicalQuantity>();
+
+            return measurement;
         }
     }
 }
