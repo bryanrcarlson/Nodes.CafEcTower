@@ -19,7 +19,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\LoggerNet\LoggerNet.csproj" />
+    <ProjectReference Include="..\..\..\..\..\..\Drive\Files\Dev\Nsar\Nodes\CafEcTower\LoggerNet\LoggerNet.csproj" />
   </ItemGroup>
 
   <ItemGroup>
