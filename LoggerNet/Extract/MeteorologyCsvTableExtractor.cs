@@ -53,7 +53,7 @@ namespace Nsar.Nodes.CafEcTower.LoggerNet.Extract
         {
             if (this.fileContent.Length <= 0) throw new Exception("No content");
 
-            List<Observation> records = new List<Observation>();
+            List<Observation> observations = new List<Observation>();
 
             using (TextReader sr = new StringReader(trimMetaData(this.fileContent)))
             {
@@ -61,10 +61,10 @@ namespace Nsar.Nodes.CafEcTower.LoggerNet.Extract
                 csv.Configuration.HasHeaderRecord = true;
                 csv.Configuration.IgnoreQuotes = false;
 
-                records = csv.GetRecords<Observation>().ToList();
+                observations = csv.GetRecords<Observation>().ToList();
             }
 
-            return records;
+            return observations;
         }
 
         public Metadata GetMetadata()
