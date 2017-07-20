@@ -5,7 +5,7 @@ VisualStudioVersion = 15.0.26430.14
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LoggerNet.Tests", "LoggerNet.Tests\LoggerNet.Tests.csproj", "{931AB7E4-4368-4149-9BBB-D84246B9496C}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LoggerNet", "..\..\..\..\..\Drive\Files\Dev\Nsar\Nodes\CafEcTower\LoggerNet\LoggerNet.csproj", "{C8F5D6ED-24BB-4B0F-B639-561D2987A38E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LoggerNet", "LoggerNet\LoggerNet.csproj", "{C8F5D6ED-24BB-4B0F-B639-561D2987A38E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

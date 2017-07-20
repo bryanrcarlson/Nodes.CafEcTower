@@ -1,0 +1,24 @@
+<?xml version="1.0"?>
+<package >
+  <metadata>
+    <id>Nsar.Nodes.CafEcTower.LoggerNet</id>
+    <version>0.1.2-alpha</version>
+    <authors>Bryan Carlson</authors>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>ETL app for specific data coming off of Campbell Scientific Datalogger</description>
+    <releaseNotes>Initial release</releaseNotes>
+    <copyright>Public domain</copyright>
+    <dependencies>
+      <group targetFramework=".NETStandard1.3">
+        <dependency id="Nsar.Common.Measure" version="0.3.5" exclude="Analyzers" />
+        <dependency id="Nsar.Nodes.Models" version="0.2.7" exclude="Analyzers" />
+        <dependency id="CsvHelper" version="3.0.0-chi05" exclude="Analyzers" />
+        <dependency id="NETStandard.Library" version="1.6.1" exclude="Analyzers" />
+        <dependency id="Newtonsoft.Json" version="10.0.3" exclude="Analyzers" />
+      </group>
+    </dependencies>
+  </metadata>
+  <files>
+    <file src="Assets\**\*.json" target="content\Assets" />
+  </files>
+</package>

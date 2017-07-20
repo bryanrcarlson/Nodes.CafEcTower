@@ -15,107 +15,115 @@ namespace Nsar.Nodes.CafEcTower.LoggerNet.Tests
             //# Arrange
             Measurement expectedMeasurement_RH_Avg = new Measurement()
             {
-                Type = "Measurement",
-                Name = "RelativeHumidityTsAvg",
-                MeasurementDateTime = new DateTime(2017, 6, 20, 11, 30, 0),
-                MetadataId = "DocumentDbMeasurementTransformer",
-                PhysicalQuantities = new List<PhysicalQuantity>()
+                type = "Measurement",
+                name = "RelativeHumidityTsAvg",
+                measurementDateTime = new DateTime(2017, 6, 20, 11, 30, 0),
+                metadataId = "DocumentDbMeasurementTransformer",
+                physicalQuantities = new List<PhysicalQuantity>()
                 {
                     new PhysicalQuantity((decimal)56.22676, "%")
                     {
-                        QualityCode = 0,
-                        QcAppliedCode = 0,
-                        QcResultCode = 0,
-                        SubmissionDateTime = DateTime.MaxValue,
-                        SourceId = ""
+                        qualityCode = 0,
+                        qcAppliedCode = 0,
+                        qcResultCode = 0,
+                        submissionDateTime = DateTime.MaxValue,
+                        sourceId = ""
                     }
                 },
-                SchemaVersion = "0.1.0",
-                Location = new Location()
+                schemaVersion = "0.1.0",
+                location = new Location()
                 {
-                    Type = "Point",
-                    Coordinates = new List<double>() { 46.7815, -117.0820 }
+                    type = "Point",
+                    coordinates = new List<double>() { 46.78152, -117.08205 }
                 },
-                FieldId = "LTAR_CookEast"
+                fieldId = "LTAR_CookEast",
+                id = "LTAR_CookEast_RelativeHumidityTsAvg_2017-06-20T11:30:00"
             };
 
             Measurement expectedMeasurement_amb_tmpr_Avg = new Measurement()
             {
-                Type = "Measurement",
-                Name = "TemperatureAirTsAvg",
-                MeasurementDateTime = new DateTime(2017, 6, 20, 11, 30, 0),
-                MetadataId = "",
-                PhysicalQuantities = new List<PhysicalQuantity>()
+                type = "Measurement",
+                name = "TemperatureAirTsAvg",
+                measurementDateTime = new DateTime(2017, 6, 20, 11, 30, 0),
+                metadataId = "",
+                physicalQuantities = new List<PhysicalQuantity>()
                 {
                     new PhysicalQuantity((decimal)4.940109, "C")
                     {
-                        QualityCode = 0,
-                        QcAppliedCode = 0,
-                        QcResultCode = 0,
-                        SubmissionDateTime = DateTime.MaxValue,
-                        SourceId = "DocumentDbMeasurementTransformer"
+                        qualityCode = 0,
+                        qcAppliedCode = 0,
+                        qcResultCode = 0,
+                        submissionDateTime = DateTime.MaxValue,
+                        sourceId = "DocumentDbMeasurementTransformer"
                     }
                 },
-                SchemaVersion = "0.1.0",
-                Location = new Location()
+                schemaVersion = "0.1.0",
+                location = new Location()
                 {
-                    Type = "Point",
-                    Coordinates = new List<double>() { 46.7815, -117.0820 }
+                    type = "Point",
+                    coordinates = new List<double>() { 46.78152, -117.08205 }
                 },
-                FieldId = "LTAR_CookEast"
+                fieldId = "LTAR_CookEast",
+                id = "LTAR_CookEast_TemperatureAirTsAvg_2017-06-20T11:30:00"
             };
 
             Measurement expectedMeasurement_PAR_density_Avg = new Measurement()
             {
-                Type = "Measurement",
-                Name = "ParDensityTsAvg",
-                MeasurementDateTime = new DateTime(2017, 6, 20, 11, 30, 0),
-                MetadataId = "DocumentDbMeasurementTransformer",
-                PhysicalQuantities = new List<PhysicalQuantity>()
+                type = "Measurement",
+                name = "ParDensityTsAvg",
+                measurementDateTime = new DateTime(2017, 6, 20, 11, 30, 0),
+                metadataId = "DocumentDbMeasurementTransformer",
+                physicalQuantities = new List<PhysicalQuantity>()
                 {
                     new PhysicalQuantity((decimal)0.001956598, "mol/(m^2 s)")
                     {
-                        QualityCode = 0,
-                        QcAppliedCode = 0,
-                        QcResultCode = 0,
-                        SubmissionDateTime = DateTime.MaxValue,
-                        SourceId = ""
+                        qualityCode = 0,
+                        qcAppliedCode = 0,
+                        qcResultCode = 0,
+                        submissionDateTime = DateTime.MaxValue,
+                        sourceId = ""
                     }
                 },
-                SchemaVersion = "0.1.0",
-                Location = new Location()
+                schemaVersion = "0.1.0",
+                location = new Location()
                 {
-                    Type = "Point",
-                    Coordinates = new List<double>() { 46.7815, -117.0820 }
+                    type = "Point",
+                    coordinates = new List<double>() { 46.78152, -117.08205 }
                 },
-                FieldId = "LTAR_CookEast"
+                fieldId = "LTAR_CookEast",
+                id = "LTAR_CookEast_ParDensityTsAvg_2017-06-20T11:30:00"
             };
 
             List<Measurement> actualMeasurements = new List<Measurement>();
 
             //# Act
             DocumentDbMeasurementTransformer sut = new DocumentDbMeasurementTransformer();
-            actualMeasurements = sut.ToMeasurements(getMockMeteorology());
+            actualMeasurements = sut.ToMeasurements(GetMockMeteorology());
 
             //# Assert
             Assert.Equal(
                 actualMeasurements
-                    .Find(m => m.Name == expectedMeasurement_RH_Avg.Name)
-                    .PhysicalQuantities[0],
-                expectedMeasurement_RH_Avg.PhysicalQuantities[0]);
+                    .Find(m => m.name == expectedMeasurement_RH_Avg.name)
+                    .physicalQuantities[0],
+                expectedMeasurement_RH_Avg.physicalQuantities[0]);
             Assert.Equal(
                 actualMeasurements
-                    .Find(m => m.Name == expectedMeasurement_amb_tmpr_Avg.Name)
-                    .PhysicalQuantities[0],
-                expectedMeasurement_amb_tmpr_Avg.PhysicalQuantities[0]);
+                    .Find(m => m.name == expectedMeasurement_amb_tmpr_Avg.name)
+                    .physicalQuantities[0],
+                expectedMeasurement_amb_tmpr_Avg.physicalQuantities[0]);
             Assert.Equal(
                 actualMeasurements
-                    .Find(m => m.Name == expectedMeasurement_PAR_density_Avg.Name)
-                    .PhysicalQuantities[0],
-                expectedMeasurement_PAR_density_Avg.PhysicalQuantities[0]);
+                    .Find(m => m.name == expectedMeasurement_PAR_density_Avg.name)
+                    .physicalQuantities[0],
+                expectedMeasurement_PAR_density_Avg.physicalQuantities[0]);
+            Assert.Equal(
+                actualMeasurements
+                    .Find(m => m.name == expectedMeasurement_PAR_density_Avg.name)
+                    .id,
+                expectedMeasurement_PAR_density_Avg.id);
         }
 
-        private Meteorology getMockMeteorology()
+        private Meteorology GetMockMeteorology()
         {
             Meteorology met = new Meteorology();
 
