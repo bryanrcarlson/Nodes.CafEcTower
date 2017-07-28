@@ -1,0 +1,7 @@
+"TOA5","LTAR_CookEast","CR3000","6503","CR3000.Std.31","CPU:DEFAULT.CR3","13636","LTAR_Met"
+"TIMESTAMP","RECORD","amb_tmpr_Avg","rslt_wnd_spd","wnd_dir_compass","RH_Avg","Precipitation_Tot","amb_press_Avg","PAR_density_Avg","batt_volt_Avg","panel_tmpr_Avg","std_wnd_dir","VPD_air","Rn_meas_Avg"
+"TS","RN","C","m/s","degrees","%","mm","kPa","umol/(s m^2)","V","C","degrees","kpa","W/m^2"
+"","","Avg","Smp","Smp","Avg","Tot","Avg","Avg","Avg","Avg","Smp","Smp","Avg"
+"2017-06-20 00:30:00",15,23.13316,4.940109,259.7,56.22676,0,93.25672,1956.598,13.63667,25.22728,14.26,1.244421,643.2509
+"2017-06-20 11:30:00",15,23.13316,4.940109,259.7,56.22676,0,93.25672,1956.598,13.63667,25.22728,14.26,1.244421,643.2509
+"2017-06-20 23:15:00",14,22.86609,5.392269,248.3,54.87591,0,93.24078,2021.407,13.6358,24.94199,13.34,1.262613,649.0586

@@ -2,16 +2,19 @@ using Xunit;
 using Nsar.Nodes.CafEcTower.LoggerNet.Extract;
 using System.Collections.Generic;
 using Nsar.Nodes.Models.LoggerNet.Meteorology;
+using System;
 
 namespace Nsar.Nodes.CafEcTower.LoggerNet.Tests
 {
     public class MeteorologyCsvTableExtractorTests
     {
         private readonly string pathToFileWithValidContent;
+        private readonly string pathToFileToTestTimeZone;
 
         public MeteorologyCsvTableExtractorTests()
         {
             pathToFileWithValidContent = @"Assets/CookEastEcTower_Met_Raw_2017_06_20_1115.dat";
+            pathToFileToTestTimeZone = @"Assets/CookEastEcTower_Met_Raw_TestTimeZone.dat";
         }
 
         [Fact]
@@ -39,7 +42,7 @@ namespace Nsar.Nodes.CafEcTower.LoggerNet.Tests
             {
                 TIMESTAMP = new System.DateTime(2017, 6, 20, 11, 30, 00),
                 RECORD = 15,
-                amb_tmpr_Avg = 4.940109,
+                amb_tmpr_Avg = 23.13316,
                 rslt_wnd_spd = 4.940109,
                 wnd_dir_compass = 259.7,
                 RH_Avg = 56.22676,
@@ -59,7 +62,7 @@ namespace Nsar.Nodes.CafEcTower.LoggerNet.Tests
 
             //# Assert
             // TODO: Override obj.Equals for better test
-            Assert.Equal(expectedRecord.amb_press_Avg, actualObservations[1].amb_press_Avg);
+            Assert.Equal(expectedRecord.amb_tmpr_Avg, actualObservations[1].amb_tmpr_Avg);
             Assert.Equal(expectedRecord.RECORD, actualObservations[1].RECORD);
             Assert.Equal(expectedRecord.Rn_meas_Avg, actualObservations[1].Rn_meas_Avg);
         }
@@ -188,6 +191,22 @@ namespace Nsar.Nodes.CafEcTower.LoggerNet.Tests
             Assert.Equal(
                 expectedMetadata.Variables.Find(mv => mv.FieldName == "Rn_meas_Avg").Units,
                 actualMetadata.Variables.Find(mv => mv.FieldName == "Rn_meas_Avg").Units);
+        }
+
+        [Fact]
+        public void GetObservations_AdjustedTimezone_ReturnsCorrectTimes()
+        {
+            //# Arrange
+            List<Observation> actualObservations = new List<Observation>();
+
+            //# Act
+            MeteorologyCsvTableExtractor sut = new MeteorologyCsvTableExtractor(pathToFileToTestTimeZone, -8);
+            actualObservations = sut.GetObservations();
+
+            //# Assert
+            Assert.Equal(actualObservations[0].TIMESTAMP, new DateTime(2017, 06, 20, 8, 30, 0));
+            Assert.Equal(actualObservations[1].TIMESTAMP, new DateTime(2017, 06, 20, 19, 30, 0));
+            Assert.Equal(actualObservations[2].TIMESTAMP, new DateTime(2017, 06, 21, 7, 15, 0));
         }
     }
 }

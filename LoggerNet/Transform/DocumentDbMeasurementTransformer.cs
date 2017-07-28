@@ -9,93 +9,47 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Reflection;
+using Nsar.Nodes.CafEcTower.LoggerNet.Core;
 
 namespace Nsar.Nodes.CafEcTower.LoggerNet.Transform
 {
     public class DocumentDbMeasurementTransformer
     {
-        private readonly string stationsMap;
-        private readonly Dictionary<string, string> mapDataFieldsToMeasurementName;
+        private readonly string targetSchemaVersion;
+        private readonly string documentType;
+        private readonly string metadataId;
 
-        public DocumentDbMeasurementTransformer()
+        private readonly IMapper map;
+        
+        public string TargetSchemaVersion { get { return targetSchemaVersion; } }
+        public string DocumentType { get { return documentType; } }
+        public string MetadataId { get { return metadataId; } }
+
+        public DocumentDbMeasurementTransformer(IMapper map,
+            string targetSchemaVersion,
+            string documentType = "Measurement",
+            string metadataId = "CafMeteorologyEcTower")
         {
-            //TODO: Error checking
-
-            // TODO: GODS MANN!  Fix this hardcoded garbage.
-            this.stationsMap = "{\"stations\":[{\"name\":\"LTAR_CookEast\",\"lat\":46.78152,\"lon\":-117.08205},{\"name\":\"LTAR_CookWest\",\"lat\":46.78404,\"lon\":-117.09083},{\"name\":\"LTAR_BoydNorth\",\"lat\":46.7551,\"lon\":-117.12605},{\"name\":\"LTAR_BoydSouth\",\"lat\":46.7503,\"lon\":-117.1285}]}";
-            this.mapDataFieldsToMeasurementName = new Dictionary<string, string>()
-            {
-                { "TIMESTAMP", "DateTime" },
-                { "RECORD", "RecordNumber" },
-                { "amb_tmpr_Avg", "TemperatureAirTsAvg" },
-                { "rslt_wnd_spd", "WindSpeedTsResultant" },
-                { "wnd_dir_compass", "WindDirection" }, // Not sure if this is a point measurement or was processed
-                { "RH_Avg", "RelativeHumidityTsAvg" },
-                { "Precipitation_Tot", "PrecipitationTsAccum" },
-                { "amb_press_Avg", "PressureAirTsAvg" },
-                { "PAR_density_Avg", "ParDensityTsAvg" },
-                { "batt_volt_Avg", "BatteryVoltageTsAvg" },
-                { "panel_tmpr_Avg", "TemperaturePanelTsAvg" },
-                { "std_wnd_dir", "WindDirectionTsStdDev" },
-                { "VPD_air", "VaporPressureDeficitAir" },
-                { "Rn_meas_Avg", "NetRadiationTsAvg" }
-            };
+            this.targetSchemaVersion = targetSchemaVersion;
+            this.documentType = documentType;
+            this.metadataId = metadataId;
+            this.map = map;
         }
+
         public List<Measurement> ToMeasurements(Meteorology meteorology)
         {
             List<Measurement> measurements = new List<Measurement>();
 
             foreach(Observation obs in meteorology.Observations)
             {
-                foreach(Variable variable in meteorology.Metadata.Variables)
+                foreach (Variable variable in meteorology.Metadata.Variables)
                 {
                     // Skip TIMESTAMP and RECORD
                     if (variable.FieldName == "TIMESTAMP" ||
                         variable.FieldName == "RECORD")
                         continue;
 
-                    // Look up property based on string, get value
-                    var value = obs.GetType().GetProperty(variable.FieldName).GetValue(obs, null);
-
-                    Measurement measurement = getMeasurementWithDefaultValues();
-                    Common.Measure.Models.PhysicalQuantity pq = new Common.Measure.Models.PhysicalQuantity(
-                        Convert.ToDecimal(value),
-                        variable.Units);
-                    Common.Measure.PhysicalQuantityConverter pqConverter = new Common.Measure.PhysicalQuantityConverter();
-                    Common.Measure.Models.PhysicalQuantity pqMetric = pqConverter.Convert(pq);
-                    measurement.name = getMeasurementNameFromFieldName(variable.FieldName);
-                    measurement.measurementDateTime = obs.TIMESTAMP;
-                    measurement.physicalQuantities.Add(
-                        new PhysicalQuantity(pqMetric.Value, pqMetric.Unit, pqMetric.Precision)
-                        {
-                            qcAppliedCode = 0,
-                            qcResultCode = 0,
-                            qualityCode = 0,
-                            sourceId = "DocumentDbMeasurementTransformer",
-                            submissionDateTime = DateTime.Now
-                        });
-                    measurement.location = new Location()
-                    {
-                        type = "Point",
-                        coordinates = new List<double>()
-                        {
-                            getLatFromStation(meteorology.Metadata.StationName),
-                            getLonFromStation(meteorology.Metadata.StationName)
-                        }
-                    };
-                    measurement.fieldId = meteorology.Metadata.StationName;
-
-                    // TODO: Unit conversion?
-                    //Measurement measurement = new Measurement(
-                    //    getMeasurementNameFromFieldName(variable.FieldName),
-                    //    obs.TIMESTAMP,
-                    //    getLatFromStation(record.Metadata.StationName),
-                    //    getLonFromStation(record.Metadata.StationName),
-                    //    new PhysicalQuantity(
-                    //        Convert.ToDouble(value),
-                    //        variable.Units));
-
-                    measurement.id = measurement.fieldId + "_" + measurement.name + "_" + measurement.measurementDateTime.ToString("s");
+                    Measurement measurement = CreateMeasurementFromVariable(variable, obs, meteorology.Metadata);
                     measurements.Add(measurement);
                 }
             }
@@ -103,45 +57,37 @@ namespace Nsar.Nodes.CafEcTower.LoggerNet.Transform
             return measurements;
         }
 
-        private double getLatFromStation(string stationName)
+        private Measurement CreateMeasurementFromVariable(Variable variable, Observation observation, Metadata metadata)
         {
-            var stations = JObject.Parse(stationsMap);
+            // Look up property based on string, get value
+            var value = observation.GetType().GetProperty(variable.FieldName).GetValue(observation, null);
 
-            double lat = stations.Property("stations")
-                .Values()
-                .Single(s => s.Value<string>("name") == stationName)
-                ["lat"].Value<double>();
-            
-            return lat;
-        }
+            Common.Measure.Models.PhysicalQuantity pq = new Common.Measure.Models.PhysicalQuantity(
+                        Convert.ToDecimal(value),
+                        variable.Units);
 
-        private double getLonFromStation(string stationName)
-        {
-            var stations = JObject.Parse(stationsMap);
-            double lon = stations.Property("stations")
-                .Values()
-                .Single(s => s.Value<string>("name") == stationName)
-                ["lon"].Value<double>();
+            // TODO: create interface, use constructor injection
+            Common.Measure.PhysicalQuantityConverter pqConverter = new Common.Measure.PhysicalQuantityConverter();
 
-            return lon;
-        }
+            Common.Measure.Models.PhysicalQuantity pqMetric = pqConverter.Convert(pq);
+            string name = map.GetMeasurementName(variable.FieldName);
+            DateTime measurementDateTime = new DateTime(observation.TIMESTAMP.Ticks, DateTimeKind.Utc);
 
-        private string getMeasurementNameFromFieldName(string fieldName)
-        {
-            return mapDataFieldsToMeasurementName[fieldName];
-        }
+            List<PhysicalQuantity> physicalQuantitis = new List<PhysicalQuantity>() {
+                new PhysicalQuantity(pqMetric.Value, pqMetric.Unit, 0, 0, 0, DateTime.UtcNow, "DocumentDbMeasurementTransformer")
+            };
 
-        private Measurement getMeasurementWithDefaultValues()
-        {
-            Measurement measurement = new Measurement();
+            Location location = new Location("Point",
+                map.GetLatFromStation(metadata),
+                map.GetLonFromStation(metadata));
 
-            measurement.type = "Measurement";
-            measurement.metadataId = "";
-            measurement.schemaVersion = "0.1.0";
+            string fieldId = map.GetFieldID(metadata);
 
-            measurement.physicalQuantities = new List<PhysicalQuantity>();
+            string partitionKey = "EcTower_" + fieldId + "_" + name;
+            string id = fieldId + "_" + name + "_" + measurementDateTime.ToString("o");
 
-            return measurement;
+            return new Measurement(partitionKey, id, DocumentType, name, TargetSchemaVersion, metadataId,
+                "", "", "", "", null, fieldId, location, measurementDateTime, physicalQuantitis);
         }
     }
 }

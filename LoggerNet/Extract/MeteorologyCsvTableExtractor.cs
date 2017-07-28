@@ -15,11 +15,18 @@ namespace Nsar.Nodes.CafEcTower.LoggerNet.Extract
     {
         private readonly string fileName;
         private readonly string fileContent;
+        private readonly int utcOffset;
 
         public string FileName { get { return fileName; } }
         public string FileContent { get { return fileContent; } }
+        public int UtcOffset { get { return utcOffset; } }
 
-        public MeteorologyCsvTableExtractor(string pathToFile)
+        /// <summary>
+        /// Constructor
+        /// </summary>
+        /// <param name="pathToFile">Absolute or relative file path to .dat file containing observations</param>
+        /// <param name="utcOffset">UTC timezone offset, accepts negatives.  Use -8 for PST, for example</param>
+        public MeteorologyCsvTableExtractor(string pathToFile, int utcOffset = 0)
         {
             if (!File.Exists(pathToFile))
                 throw new ArgumentException("File does not exist");
@@ -41,12 +48,21 @@ namespace Nsar.Nodes.CafEcTower.LoggerNet.Extract
             {
                 throw e;
             }
+
+            this.utcOffset = utcOffset;
         }
 
-        public MeteorologyCsvTableExtractor(string fileName, string fileContent)
+        /// <summary>
+        /// Constructor
+        /// </summary>
+        /// <param name="fileName">Name of file</param>
+        /// <param name="fileContent">Contents of file, do not use this for large files</param>
+        /// <param name="utcOffset">UTC timezone offset, accepts negatives.  Use -8 for PST, for example</param>
+        public MeteorologyCsvTableExtractor(string fileName, string fileContent, int utcOffset = 0)
         {
             this.fileContent = fileContent;
             this.fileName = fileName;
+            this.utcOffset = utcOffset;
         }
 
         public List<Observation> GetObservations()
@@ -62,6 +78,13 @@ namespace Nsar.Nodes.CafEcTower.LoggerNet.Extract
                 csv.Configuration.IgnoreQuotes = false;
 
                 observations = csv.GetRecords<Observation>().ToList();
+                
+            }
+
+            // Datetimes were in unknown timezone (most likely PST, or UTC-08), so convert to UTC
+            foreach(Observation obs in observations)
+            {
+                obs.TIMESTAMP = new DateTime(obs.TIMESTAMP.AddHours((-1 * utcOffset)).Ticks, DateTimeKind.Utc);
             }
 
             return observations;

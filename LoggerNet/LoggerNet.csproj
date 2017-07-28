@@ -3,7 +3,7 @@
   <PropertyGroup>
     <TargetFrameworks>net46;netstandard1.3</TargetFrameworks>
     <PackageId>Nsar.Nodes.CafEcTower.LoggerNet</PackageId>
-    <PackageVersion>0.1.7</PackageVersion>
+    <PackageVersion>0.3.0</PackageVersion>
     <Authors>Bryan Carlson</Authors>
     <Description>ETL libraries for specific data coming off of Campbell Scientific Datalogger</Description>
     <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
@@ -21,7 +21,7 @@
     <PackageReference Include="CsvHelper" Version="2.16.3" />
     <PackageReference Include="Newtonsoft.Json" Version="10.0.3" />
     <PackageReference Include="Nsar.Common.Measure" Version="0.3.7" />
-    <PackageReference Include="Nsar.Nodes.Models" Version="0.3.2" />
+    <PackageReference Include="Nsar.Nodes.Models" Version="1.0.9" />
   </ItemGroup>
 
   <ItemGroup>

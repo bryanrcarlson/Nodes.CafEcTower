@@ -13,114 +13,113 @@ namespace Nsar.Nodes.CafEcTower.LoggerNet.Tests
         public void ToMeasurement_ValidData_ReturnCorrectMeasurements()
         {
             //# Arrange
-            Measurement expectedMeasurement_RH_Avg = new Measurement()
-            {
-                type = "Measurement",
-                name = "RelativeHumidityTsAvg",
-                measurementDateTime = new DateTime(2017, 6, 20, 11, 30, 0),
-                metadataId = "DocumentDbMeasurementTransformer",
-                physicalQuantities = new List<PhysicalQuantity>()
-                {
-                    new PhysicalQuantity((decimal)56.22676, "%")
-                    {
-                        qualityCode = 0,
-                        qcAppliedCode = 0,
-                        qcResultCode = 0,
-                        submissionDateTime = DateTime.MaxValue,
-                        sourceId = ""
-                    }
-                },
-                schemaVersion = "0.1.0",
-                location = new Location()
-                {
-                    type = "Point",
-                    coordinates = new List<double>() { 46.78152, -117.08205 }
-                },
-                fieldId = "LTAR_CookEast",
-                id = "LTAR_CookEast_RelativeHumidityTsAvg_2017-06-20T11:30:00"
-            };
+            Measurement expectedMeasurement_RH_Avg = new Measurement(
+                "EcTower_CookEast_RelativeHumidityTsAvg",
+                "CookEast_RelativeHumidityTsAvg_2017-06-20T11:30:00.0000000Z",
+                "Measurement",
+                "RelativeHumidityTsAvg",
+                "1.0.0",
+                "CafMeteorologyEcTower",
+                "", "", "", "", null,
+                "CookEast",
+                new Location("Point", 46.78152, -117.08205),
+                new DateTime(2017, 6, 20, 11, 30, 0),
+                new List<PhysicalQuantity>() { new PhysicalQuantity(
+                    (decimal)56.22676, "%", 0, 0, 0,
+                    DateTime.MaxValue,
+                    "DocumentDbMeasurementTransformer")});
 
-            Measurement expectedMeasurement_amb_tmpr_Avg = new Measurement()
-            {
-                type = "Measurement",
-                name = "TemperatureAirTsAvg",
-                measurementDateTime = new DateTime(2017, 6, 20, 11, 30, 0),
-                metadataId = "",
-                physicalQuantities = new List<PhysicalQuantity>()
-                {
-                    new PhysicalQuantity((decimal)4.940109, "C")
-                    {
-                        qualityCode = 0,
-                        qcAppliedCode = 0,
-                        qcResultCode = 0,
-                        submissionDateTime = DateTime.MaxValue,
-                        sourceId = "DocumentDbMeasurementTransformer"
-                    }
-                },
-                schemaVersion = "0.1.0",
-                location = new Location()
-                {
-                    type = "Point",
-                    coordinates = new List<double>() { 46.78152, -117.08205 }
-                },
-                fieldId = "LTAR_CookEast",
-                id = "LTAR_CookEast_TemperatureAirTsAvg_2017-06-20T11:30:00"
-            };
+            Measurement expectedMeasurement_amb_tmpr_Avg = new Measurement(
+                "EcTower_CookEast_TemperatureAirTsAvg",
+                "CookEast_TemperatureAirTsAvg_2017-06-20T11:30:00.0000000Z",
+                "Measurement",
+                "TemperatureAirTsAvg",
+                "1.0.0",
+                "CafMeteorologyEcTower",
+                "", "", "", "", null,
+                "CookEast",
+                new Location("Point", 46.78152, -117.08205),
+                new DateTime(2017, 6, 20, 11, 30, 0),
+                new List<PhysicalQuantity>() { new PhysicalQuantity(
+                    (decimal)4.940109, "C", 0, 0, 0,
+                    DateTime.MaxValue,
+                    "DocumentDbMeasurementTransformer")});
 
-            Measurement expectedMeasurement_PAR_density_Avg = new Measurement()
-            {
-                type = "Measurement",
-                name = "ParDensityTsAvg",
-                measurementDateTime = new DateTime(2017, 6, 20, 11, 30, 0),
-                metadataId = "DocumentDbMeasurementTransformer",
-                physicalQuantities = new List<PhysicalQuantity>()
-                {
-                    new PhysicalQuantity((decimal)0.001956598, "mol/(m^2 s)")
-                    {
-                        qualityCode = 0,
-                        qcAppliedCode = 0,
-                        qcResultCode = 0,
-                        submissionDateTime = DateTime.MaxValue,
-                        sourceId = ""
-                    }
-                },
-                schemaVersion = "0.1.0",
-                location = new Location()
-                {
-                    type = "Point",
-                    coordinates = new List<double>() { 46.78152, -117.08205 }
-                },
-                fieldId = "LTAR_CookEast",
-                id = "LTAR_CookEast_ParDensityTsAvg_2017-06-20T11:30:00"
-            };
+            Measurement expectedMeasurement_PAR_density_Avg = new Measurement(
+                "EcTower_CookEast_ParDensityTsAvg",
+                "CookEast_ParDensityTsAvg_2017-06-20T11:30:00.0000000Z",
+                "Measurement",
+                "ParDensityTsAvg",
+                "1.0.0",
+                "CafMeteorologyEcTower",
+                "", "", "", "", null,
+                "CookEast",
+                new Location("Point", 46.78152, -117.08205),
+                new DateTime(2017, 6, 20, 11, 30, 0),
+                new List<PhysicalQuantity>() { new PhysicalQuantity(
+                    (decimal)0.001956598, "mol/(m^2 s)", 0, 0, 0,
+                    DateTime.MaxValue,
+                    "DocumentDbMeasurementTransformer")});
 
             List<Measurement> actualMeasurements = new List<Measurement>();
 
             //# Act
-            DocumentDbMeasurementTransformer sut = new DocumentDbMeasurementTransformer();
+            Mappers.MapFromMeteorologyToCAFStandards map = new Mappers.MapFromMeteorologyToCAFStandards();
+
+            DocumentDbMeasurementTransformer sut = new DocumentDbMeasurementTransformer(map, "1.0.0");
             actualMeasurements = sut.ToMeasurements(GetMockMeteorology());
 
             //# Assert
             Assert.Equal(
                 actualMeasurements
-                    .Find(m => m.name == expectedMeasurement_RH_Avg.name)
-                    .physicalQuantities[0],
-                expectedMeasurement_RH_Avg.physicalQuantities[0]);
+                    .Find(m => m.Name == expectedMeasurement_RH_Avg.Name)
+                    .PhysicalQuantities[0].Value,
+                expectedMeasurement_RH_Avg.PhysicalQuantities[0].Value);
             Assert.Equal(
                 actualMeasurements
-                    .Find(m => m.name == expectedMeasurement_amb_tmpr_Avg.name)
-                    .physicalQuantities[0],
-                expectedMeasurement_amb_tmpr_Avg.physicalQuantities[0]);
+                    .Find(m => m.Name == expectedMeasurement_RH_Avg.Name)
+                    .PhysicalQuantities[0].Unit,
+                expectedMeasurement_RH_Avg.PhysicalQuantities[0].Unit);
             Assert.Equal(
                 actualMeasurements
-                    .Find(m => m.name == expectedMeasurement_PAR_density_Avg.name)
-                    .physicalQuantities[0],
-                expectedMeasurement_PAR_density_Avg.physicalQuantities[0]);
+                    .Find(m => m.Name == expectedMeasurement_amb_tmpr_Avg.Name)
+                    .PhysicalQuantities[0].Value,
+                expectedMeasurement_amb_tmpr_Avg.PhysicalQuantities[0].Value);
             Assert.Equal(
                 actualMeasurements
-                    .Find(m => m.name == expectedMeasurement_PAR_density_Avg.name)
-                    .id,
-                expectedMeasurement_PAR_density_Avg.id);
+                    .Find(m => m.Name == expectedMeasurement_amb_tmpr_Avg.Name)
+                    .PhysicalQuantities[0].Unit,
+                expectedMeasurement_amb_tmpr_Avg.PhysicalQuantities[0].Unit);
+            Assert.Equal(
+                actualMeasurements
+                    .Find(m => m.Name == expectedMeasurement_PAR_density_Avg.Name)
+                    .PhysicalQuantities[0].Value,
+                expectedMeasurement_PAR_density_Avg.PhysicalQuantities[0].Value);
+            Assert.Equal(
+                actualMeasurements
+                    .Find(m => m.Name == expectedMeasurement_PAR_density_Avg.Name)
+                    .ID,
+                expectedMeasurement_PAR_density_Avg.ID);
+            Assert.Equal(
+                actualMeasurements
+                    .Find(m => m.Name == expectedMeasurement_PAR_density_Avg.Name)
+                    .FieldID,
+                expectedMeasurement_PAR_density_Avg.FieldID);
+            Assert.Equal(
+                actualMeasurements
+                    .Find(m => m.Name == expectedMeasurement_PAR_density_Avg.Name)
+                    .Location.Coordinates[0],
+                expectedMeasurement_PAR_density_Avg.Location.Coordinates[0]);
+            Assert.Equal(
+                actualMeasurements
+                    .Find(m => m.Name == expectedMeasurement_PAR_density_Avg.Name)
+                    .MetadataID,
+                expectedMeasurement_PAR_density_Avg.MetadataID);
+            Assert.Equal(
+                actualMeasurements
+                    .Find(m => m.Name == expectedMeasurement_PAR_density_Avg.Name)
+                    .SchemaVersion,
+                expectedMeasurement_PAR_density_Avg.SchemaVersion);
         }
 
         private Meteorology GetMockMeteorology()
