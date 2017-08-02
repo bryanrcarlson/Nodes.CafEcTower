@@ -9,13 +9,13 @@ using Newtonsoft.Json.Linq;
 
 namespace Nsar.Nodes.CafEcTower.LoggerNet.Mappers
 {
-    public class MapFromMeteorologyToCAFStandards : IMapper
+    public class MapFromMeteorologyToCafStandards : IMapper
     {
         private readonly string stationsMap;
         private readonly Dictionary<string, string> mapDataFieldsToMeasurementName;
         private readonly Dictionary<string, string> mapStationNameToFieldID;
 
-        public MapFromMeteorologyToCAFStandards()
+        public MapFromMeteorologyToCafStandards()
         {
             // TODO: GODS MANN!  Fix this hardcoded garbage.
             this.stationsMap = "{\"stations\":[{\"name\":\"LTAR_CookEast\",\"lat\":46.78152,\"lon\":-117.08205},{\"name\":\"LTAR_CookWest\",\"lat\":46.78404,\"lon\":-117.09083},{\"name\":\"LTAR_BoydNorth\",\"lat\":46.7551,\"lon\":-117.12605},{\"name\":\"LTAR_BoydSouth\",\"lat\":46.7503,\"lon\":-117.1285}]}";

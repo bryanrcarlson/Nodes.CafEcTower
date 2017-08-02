@@ -64,7 +64,7 @@ namespace Nsar.Nodes.CafEcTower.LoggerNet.Tests
             List<Measurement> actualMeasurements = new List<Measurement>();
 
             //# Act
-            Mappers.MapFromMeteorologyToCAFStandards map = new Mappers.MapFromMeteorologyToCAFStandards();
+            Mappers.MapFromMeteorologyToCafStandards map = new Mappers.MapFromMeteorologyToCafStandards();
 
             DocumentDbMeasurementTransformer sut = new DocumentDbMeasurementTransformer(map, "1.0.0");
             actualMeasurements = sut.ToMeasurements(GetMockMeteorology());
