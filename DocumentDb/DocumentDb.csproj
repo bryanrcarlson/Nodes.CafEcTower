@@ -11,9 +11,11 @@
     <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
   </PropertyGroup>
   <ItemGroup>
-    <Folder Include="Extract\" />
     <Folder Include="Load\" />
     <Folder Include="Transform\" />
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="Nsar.Nodes.Models" Version="1.0.9" />
   </ItemGroup>
 
 </Project>
