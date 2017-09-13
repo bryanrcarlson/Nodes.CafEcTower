@@ -37,19 +37,6 @@ namespace DocumentDb.Tests
 
         private List<Measurement> getValidMeasurements()
         {
-            //List<Measurement> results = new List<Measurement>()
-            //{
-            //    new Measurement(
-            //        "", "", "", "WindSpeedTsResultant", "", "", "", "", "", "", null, "", null, DateTime.Parse("2017-09-06T00:00:00Z"), new List<PhysicalQuantity>()
-            //        {
-            //            new PhysicalQuantity(3.014338m, "m/s", 0, 0, 0, DateTime.Parse("2017-09-06T00:04:15.9797575Z"), "DocumentDbMeasurementTransformer")
-            //        }),
-            //    new Measurement(
-            //        "", "", "", "TemperatureAirTsAvg", "", "", "", "", "", "", null, "", null, DateTime.Parse("2017-09-06T00:00:00Z"), new List<PhysicalQuantity>()
-            //        {
-            //            new PhysicalQuantity(27.80702m, "C", 0, 0, 0, DateTime.Parse("2017-09-06T00:04:15.9797575Z"), "DocumentDbMeasurementTransformer")
-            //        })
-            //};
             List<Measurement> results = new List<Measurement>()
             {
                 new Measurement(

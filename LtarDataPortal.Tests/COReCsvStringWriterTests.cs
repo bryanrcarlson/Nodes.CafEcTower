@@ -24,6 +24,21 @@ namespace LtarDataPortal.Tests
             Assert.Equal(expected, actual);
         }
 
+        [Fact]
+        public void GetFilename_ValidData_ReturnsCorrectFilename()
+        {
+            // Arrange
+            COReCsvStringWriter sut = new COReCsvStringWriter();
+            string expected = getValidFilename();
+            List<Observation> obs = getValidObservations();
+
+            // Act
+            string actual = sut.GetFilename(obs[0]);
+
+            // Assert
+            Assert.Equal(expected, actual);
+        }
+
         private List<Observation> getValidObservations()
         {
             DateTime dt = DateTime.ParseExact("2017-09-06T00:00:00Z", "yyyy-MM-dd'T'HH:mm:ss'Z'", CultureInfo.InvariantCulture, DateTimeStyles.AssumeUniversal | DateTimeStyles.AdjustToUniversal);
@@ -33,7 +48,7 @@ namespace LtarDataPortal.Tests
 
             List<Observation> result = new List<Observation>()
            {
-               new Observation("CAF", "001", dtoSpecified, 'C', 27.80702m, 3.014338m, 125.9m, 22.4503m, 0, 93.33482m, 283.3229m, null, null, 13.01541m, 29.87764m)
+               new Observation("CAF", "001", dtoSpecified, 'L', 27.80702m, 3.014338m, 125.9m, 22.4503m, 0, 93.33482m, 283.3229m, null, null, 13.01541m, 29.87764m)
            };
 
             return result;
@@ -43,8 +58,15 @@ namespace LtarDataPortal.Tests
         {
             StringBuilder sb = new StringBuilder();
             sb.AppendLine("LTARSiteAcronym,StationID,DateTime,RecordType,AirTemperature,WindSpeed,WindDirection,RelativeHumidity,Precipitation,AirPressure,PAR,ShortWaveIn,LongWaveIn,BatteryVoltage,LoggerTemperature");
-            sb.AppendLine("CAF,001,2017-09-05T16:00-08:00,C,27.80702,3.014338,125.9,22.4503,0,93.33482,283.3229,,,13.01541,29.87764");
+            sb.AppendLine("CAF,001,2017-09-05T16:00-08:00,L,27.81,3.01,125.90,22.45,0.00,93.33,283.32,,,13.02,29.88");
             return sb.ToString();
+        }
+
+        private string getValidFilename()
+        {
+            string month = DateTime.Now.ToString("MM");
+            string year = DateTime.Now.ToString("yyyy");
+            return "cafMET001L_01_"+year+month+"00_00.csv";
         }
     }
 }

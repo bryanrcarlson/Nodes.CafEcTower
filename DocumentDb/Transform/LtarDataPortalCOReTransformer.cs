@@ -49,7 +49,7 @@ namespace Nsar.Nodes.CafEcTower.DocumentDb.Transform
                 Observation o = new Observation(
                     ltarSiteAcronym,
                     stationId,
-                    dtoSpecified.DateTime,
+                    dtoSpecified,
                     recordType,
                     airTemp,
                     windSp,

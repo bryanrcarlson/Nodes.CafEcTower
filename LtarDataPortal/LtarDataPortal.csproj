@@ -8,7 +8,6 @@
     <Authors>Bryan Carlson</Authors>
     <Description>ETL libraries to work with met (and eventually flux) data coming of EcTowers and flowing NAL's LTAR data portal</Description>
     <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
-    <PackageReleaseNotes>First release</PackageReleaseNotes>
     <Copyright>Public domain</Copyright>
     <RootNamespace>Nsar.Nodes.CafEcTower.LtarDataPortal</RootNamespace>
     <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
