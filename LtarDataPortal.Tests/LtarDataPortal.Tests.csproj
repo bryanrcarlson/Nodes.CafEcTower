@@ -14,11 +14,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Assets\" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <ProjectReference Include="..\DocumentDb\DocumentDb.csproj" />
+    <ProjectReference Include="..\LtarDataPortal\LtarDataPortal.csproj" />
   </ItemGroup>
 
 </Project>

@@ -29,8 +29,8 @@ namespace DocumentDb.Tests
             Assert.Equal(expected[0].DateTime, actual[0].DateTime);
             Assert.Equal(expected[0].LoggerTemperature, actual[0].LoggerTemperature);
             Assert.Equal(expected[0].LongWaveIn, actual[0].LongWaveIn);
-            Assert.Equal(expected[0].LtarSiteAcronym, actual[0].LtarSiteAcronym);
-            Assert.Equal(expected[0].Par, actual[0].Par);
+            Assert.Equal(expected[0].LTARSiteAcronym, actual[0].LTARSiteAcronym);
+            Assert.Equal(expected[0].PAR, actual[0].PAR);
             Assert.Equal(expected[0].Precipitation, actual[0].Precipitation);
             Assert.Equal(expected[0].RecordType, actual[0].RecordType);
             Assert.Equal(expected[0].RelativeHumidity, actual[0].RelativeHumidity);

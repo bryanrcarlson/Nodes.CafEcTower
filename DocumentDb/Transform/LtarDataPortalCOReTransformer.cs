@@ -68,5 +68,15 @@ namespace Nsar.Nodes.CafEcTower.DocumentDb.Transform
 
             return observations;
         }
+
+        public CORe ToCORe(
+            string ltarSiteAcronym,
+            string stationId,
+            char recordType,
+            int utcOffset,
+            List<Measurement> measurements)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
