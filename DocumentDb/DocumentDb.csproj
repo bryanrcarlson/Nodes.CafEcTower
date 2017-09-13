@@ -2,7 +2,7 @@
   <PropertyGroup>
     <TargetFrameworks>net46;netstandard1.3</TargetFrameworks>
     <PackageId>Nsar.Nodes.CafEcTower.DocumentDb</PackageId>
-    <PackageVersion>0.2.0</PackageVersion>
+    <PackageVersion>0.2.1</PackageVersion>
     <Authors>Bryan Carlson</Authors>
     <Description>ETL libraries for EC Tower data being saved to the Cosmos DB DocumentDB API</Description>
     <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
