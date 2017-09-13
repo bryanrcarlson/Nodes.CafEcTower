@@ -12,10 +12,9 @@
   </PropertyGroup>
   <ItemGroup>
     <Folder Include="Load\" />
-    <Folder Include="Transform\" />
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="Nsar.Nodes.Models" Version="1.0.9" />
+    <PackageReference Include="Nsar.Nodes.Models" Version="1.2.1" />
   </ItemGroup>
 
 </Project>
