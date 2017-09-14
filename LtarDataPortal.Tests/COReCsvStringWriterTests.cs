@@ -25,15 +25,30 @@ namespace LtarDataPortal.Tests
         }
 
         [Fact]
-        public void GetFilename_ValidData_ReturnsCorrectFilename()
+        public void GetFilenameUtcDateTime_ValidData_ReturnsCorrectFilename()
         {
             // Arrange
             COReCsvStringWriter sut = new COReCsvStringWriter();
-            string expected = getValidFilename();
+            string expected = getValidFilenameUtc();
             List<Observation> obs = getValidObservations();
 
             // Act
-            string actual = sut.GetFilename(obs[0]);
+            string actual = sut.GetFilenameUtcDateTime(obs[0]);
+
+            // Assert
+            Assert.Equal(expected, actual);
+        }
+
+        [Fact]
+        public void GetFilenamePstDateTime_ValidData_ReturnsCorrectFilename()
+        {
+            // Arrange
+            COReCsvStringWriter sut = new COReCsvStringWriter();
+            string expected = getValidFilenamePst();
+            List<Observation> obs = getValidObservations();
+
+            // Act
+            string actual = sut.GetFilenamePstDateTime(obs[0]);
 
             // Assert
             Assert.Equal(expected, actual);
@@ -62,11 +77,24 @@ namespace LtarDataPortal.Tests
             return sb.ToString();
         }
 
-        private string getValidFilename()
+        private string getValidFilenameUtc()
         {
             string month = DateTime.UtcNow.ToString("MM");
             string year = DateTime.UtcNow.ToString("yyyy");
             return "cafMET001L_01_"+year+month+"00_00.csv";
+        }
+
+        private string getValidFilenamePst()
+        {
+            DateTime dt = DateTime.Now;
+
+            if (TimeZoneInfo.Local.IsDaylightSavingTime(dt))
+            {
+                dt.AddHours(1);
+            }
+            string month = DateTime.UtcNow.ToString("MM");
+            string year = DateTime.UtcNow.ToString("yyyy");
+            return "cafMET001L_01_" + year + month + "00_00.csv";
         }
     }
 }

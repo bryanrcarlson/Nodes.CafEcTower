@@ -40,17 +40,45 @@ namespace Nsar.Nodes.CafEcTower.LtarDataPortal.Load
             return fileContent;
         }
 
-        public string GetFilename(Observation observation)
+        /// <summary>
+        /// Returns a filename formatted as specified in CORe Concepts of Operation document
+        /// Uses UTC timezone for the month and year
+        /// </summary>
+        /// <param name="observation"></param>
+        /// <returns></returns>
+        public string GetFilenameUtcDateTime(Observation observation)
         {
             string siteAcronym = observation.LTARSiteAcronym.ToLower();
             string measurementFlag = "MET";
             string stationID = observation.StationID;
             char recordType = observation.RecordType;
             string formatVersion = "01";
-            //string year = observation.DateTime.ToString("yyyy");
-            //string month = observation.DateTime.ToString("MM");
             string year = DateTime.UtcNow.ToString("yyyy");
             string month = DateTime.UtcNow.ToString("MM");
+            string day = "00";
+            string fileCount = "00";
+            string fileExtension = "csv";
+
+            string result = $"{siteAcronym}{measurementFlag}{stationID}{recordType}_{formatVersion}_{year}{month}{day}_{fileCount}.{fileExtension}";
+
+            return result;
+        }
+
+        // <summary>
+        /// Returns a filename formatted as specified in CORe Concepts of Operation document
+        /// Uses PST timezone (ignoring daylight savings time) for the month and year
+        /// </summary>
+        /// <param name="observation"></param>
+        /// <returns></returns>
+        public string GetFilenamePstDateTime(Observation observation)
+        {
+            string siteAcronym = observation.LTARSiteAcronym.ToLower();
+            string measurementFlag = "MET";
+            string stationID = observation.StationID;
+            char recordType = observation.RecordType;
+            string formatVersion = "01";
+            string year = DateTime.UtcNow.AddHours(-8).ToString("yyyy");
+            string month = DateTime.UtcNow.AddHours(-8).ToString("MM");
             string day = "00";
             string fileCount = "00";
             string fileExtension = "csv";
