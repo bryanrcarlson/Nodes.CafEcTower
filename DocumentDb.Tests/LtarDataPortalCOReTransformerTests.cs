@@ -99,7 +99,7 @@ namespace DocumentDb.Tests
         {
             List<Observation> result = new List<Observation>()
            {
-               new Observation("CAF", "001", new DateTimeOffset(2017, 09, 05, 16, 0, 0, new TimeSpan(-8, 0, 0)), 'L', 27.80702m, 3.014338m, 125.9m, 22.4503m, 0, 93.33482m, 283.3229m, null, null, 13.01541m, 29.87764m)
+               new Observation("CAF", "001", new DateTimeOffset(2017, 09, 05, 16, 0, 0, new TimeSpan(-8, 0, 0)), -8, 'L', 27.80702m, 3.014338m, 125.9m, 22.4503m, 0, 93.33482m, 283.3229m, null, null, 13.01541m, 29.87764m)
            };
 
             return result;

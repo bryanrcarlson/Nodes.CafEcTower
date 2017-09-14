@@ -71,6 +71,7 @@ namespace Nsar.Nodes.CafEcTower.DocumentDb.Transform
                     ltarSiteAcronym,
                     stationId,
                     dtoSpecified,
+                    utcOffset,
                     recordType,
                     airTemp,
                     windSp,
