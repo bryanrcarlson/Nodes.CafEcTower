@@ -48,13 +48,15 @@ namespace Nsar.Nodes.CafEcTower.LtarDataPortal.Load
         /// <returns></returns>
         public string GetFilenameUtcDateTime(Observation observation)
         {
+            DateTime dt = DateTime.UtcNow;
+
             string siteAcronym = observation.LTARSiteAcronym.ToLower();
             string measurementFlag = "MET";
             string stationID = observation.StationID;
             char recordType = observation.RecordType;
             string formatVersion = "01";
-            string year = DateTime.UtcNow.ToString("yyyy");
-            string month = DateTime.UtcNow.ToString("MM");
+            string year = dt.ToString("yyyy");
+            string month = dt.ToString("MM");
             string day = "00";
             string fileCount = "00";
             string fileExtension = "csv";
@@ -72,13 +74,15 @@ namespace Nsar.Nodes.CafEcTower.LtarDataPortal.Load
         /// <returns></returns>
         public string GetFilenamePstDateTime(Observation observation)
         {
+            DateTime dt = DateTime.UtcNow.AddHours(-8);
+
             string siteAcronym = observation.LTARSiteAcronym.ToLower();
             string measurementFlag = "MET";
             string stationID = observation.StationID;
             char recordType = observation.RecordType;
             string formatVersion = "01";
-            string year = DateTime.UtcNow.AddHours(-8).ToString("yyyy");
-            string month = DateTime.UtcNow.AddHours(-8).ToString("MM");
+            string year = dt.ToString("yyyy");
+            string month = dt.ToString("MM");
             string day = "00";
             string fileCount = "00";
             string fileExtension = "csv";
