@@ -41,7 +41,7 @@ namespace LtarDataPortal.Tests
 
         private List<Observation> getValidObservations()
         {
-            DateTime dt = DateTime.ParseExact("2017-09-06T00:00:00Z", "yyyy-MM-dd'T'HH:mm:ss'Z'", CultureInfo.InvariantCulture, DateTimeStyles.AssumeUniversal | DateTimeStyles.AdjustToUniversal);
+            DateTime dt = DateTime.ParseExact("2017-11-01T00:00:00Z", "yyyy-MM-dd'T'HH:mm:ss'Z'", CultureInfo.InvariantCulture, DateTimeStyles.AssumeUniversal | DateTimeStyles.AdjustToUniversal);
             DateTimeOffset dtoUtc = new DateTimeOffset(dt, TimeSpan.Zero);
             DateTimeOffset dtoSpecified = dtoUtc.ToOffset(TimeSpan.FromHours(-8));
             
@@ -58,14 +58,14 @@ namespace LtarDataPortal.Tests
         {
             StringBuilder sb = new StringBuilder();
             sb.AppendLine("LTARSiteAcronym,StationID,DateTime,RecordType,AirTemperature,WindSpeed,WindDirection,RelativeHumidity,Precipitation,AirPressure,PAR,ShortWaveIn,LongWaveIn,BatteryVoltage,LoggerTemperature");
-            sb.AppendLine("CAF,001,2017-09-05T16:00-08:00,L,27.81,3.01,125.90,22.45,0.00,93.33,283.32,,,13.02,29.88");
+            sb.AppendLine("CAF,001,2017-10-31T16:00-08:00,L,27.81,3.01,125.90,22.45,0.00,93.33,283.32,,,13.02,29.88");
             return sb.ToString();
         }
 
         private string getValidFilename()
         {
-            string month = DateTime.Now.ToString("MM");
-            string year = DateTime.Now.ToString("yyyy");
+            string month = DateTime.UtcNow.ToString("MM");
+            string year = DateTime.UtcNow.ToString("yyyy");
             return "cafMET001L_01_"+year+month+"00_00.csv";
         }
     }

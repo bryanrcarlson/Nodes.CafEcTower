@@ -47,8 +47,10 @@ namespace Nsar.Nodes.CafEcTower.LtarDataPortal.Load
             string stationID = observation.StationID;
             char recordType = observation.RecordType;
             string formatVersion = "01";
-            string year = observation.DateTime.ToString("yyyy");
-            string month = observation.DateTime.ToString("MM");
+            //string year = observation.DateTime.ToString("yyyy");
+            //string month = observation.DateTime.ToString("MM");
+            string year = DateTime.UtcNow.ToString("yyyy");
+            string month = DateTime.UtcNow.ToString("MM");
             string day = "00";
             string fileCount = "00";
             string fileExtension = "csv";
