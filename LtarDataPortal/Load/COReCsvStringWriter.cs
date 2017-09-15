@@ -15,23 +15,24 @@ namespace Nsar.Nodes.CafEcTower.LtarDataPortal.Load
     {
         public string GetContentString(List<Observation> observations)
         {
+            List<Observation> sortedObservations = observations.OrderBy(o => o.DateTime).ToList();
+
             string fileContent;
 
             using (var stream = new MemoryStream())
             using (var reader = new StreamReader(stream))
             using (var writer = new StreamWriter(stream))
-            using (var csv = new CsvWriter(writer))
+            using (var csvWriter = new CsvWriter(writer))
             {
-
                 var formatDateTimeOffset = new CsvHelper.TypeConversion.TypeConverterOptions
                 {
                     Format = "yyyy-MM-ddTHH:mmzzz"
                 };
 
                 CsvHelper.TypeConversion.TypeConverterOptionsFactory.AddOptions<DateTimeOffset>(formatDateTimeOffset);
-                CsvHelper.TypeConversion.TypeConverterFactory.AddConverter<Decimal>(new MyDecimalConverter());
+                //CsvHelper.TypeConversion.TypeConverterFactory.AddConverter<Decimal?>(new MyDecimalConverter());
 
-                csv.WriteRecords(observations);
+                csvWriter.WriteRecords(sortedObservations);
                 writer.Flush();
                 stream.Position = 0;
                 fileContent = reader.ReadToEnd();

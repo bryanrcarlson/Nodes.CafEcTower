@@ -1,0 +1,9 @@
+﻿LTARSiteAcronym,StationID,DateTime,RecordType,AirTemperature,WindSpeed,WindDirection,RelativeHumidity,Precipitation,AirPressure,PAR,ShortWaveIn,LongWaveIn,BatteryVoltage,LoggerTemperature
+CAF,001,2017-09-15T06:45-08:00,L,7.161032,,,,,,,,,,
+CAF,001,2017-09-15T07:00-08:00,L,10.01098,,,,,,,,,,
+CAF,001,2017-09-15T07:15-08:00,L,10.92044,,,,,,,,,,
+CAF,001,2017-09-15T07:30-08:00,L,11.57352,,,,,,,,,,
+CAF,001,2017-09-15T07:45-08:00,L,12.10432,,,,,,,,,,
+CAF,001,2017-09-15T08:00-08:00,L,12.29931,,,,,,,,,,
+CAF,001,2017-09-15T08:15-08:00,L,12.70057,,,,,,,,,,
+CAF,001,2017-09-15T08:30-08:00,L,12.89014,,,,,,,,,,

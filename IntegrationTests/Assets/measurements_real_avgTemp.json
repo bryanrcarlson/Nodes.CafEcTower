@@ -1,0 +1,122 @@
+﻿[
+  {
+    "name": "TemperatureAirTsAvg",
+    "measurementDateTime": "2017-09-15T14:45:00Z",
+    "physicalQuantities": [
+      {
+        "value": 7.161032,
+        "unit": "C",
+        "qualityCode": 0,
+        "qcAppliedCode": 0,
+        "qcResultCode": 0,
+        "submissionDateTime": "2017-09-15T15:10:07.1231777Z",
+        "sourceId": "DocumentDbMeasurementTransformer"
+      }
+    ]
+  },
+  {
+    "name": "TemperatureAirTsAvg",
+    "measurementDateTime": "2017-09-15T15:00:00Z",
+    "physicalQuantities": [
+      {
+        "value": 10.01098,
+        "unit": "C",
+        "qualityCode": 0,
+        "qcAppliedCode": 0,
+        "qcResultCode": 0,
+        "submissionDateTime": "2017-09-15T15:10:07.1700489Z",
+        "sourceId": "DocumentDbMeasurementTransformer"
+      }
+    ]
+  },
+  {
+    "name": "TemperatureAirTsAvg",
+    "measurementDateTime": "2017-09-15T15:15:00Z",
+    "physicalQuantities": [
+      {
+        "value": 10.92044,
+        "unit": "C",
+        "qualityCode": 0,
+        "qcAppliedCode": 0,
+        "qcResultCode": 0,
+        "submissionDateTime": "2017-09-15T15:40:21.7394Z",
+        "sourceId": "DocumentDbMeasurementTransformer"
+      }
+    ]
+  },
+  {
+    "name": "TemperatureAirTsAvg",
+    "measurementDateTime": "2017-09-15T15:30:00Z",
+    "physicalQuantities": [
+      {
+        "value": 11.57352,
+        "unit": "C",
+        "qualityCode": 0,
+        "qcAppliedCode": 0,
+        "qcResultCode": 0,
+        "submissionDateTime": "2017-09-15T15:40:21.7394Z",
+        "sourceId": "DocumentDbMeasurementTransformer"
+      }
+    ]
+  },
+  {
+    "name": "TemperatureAirTsAvg",
+    "measurementDateTime": "2017-09-15T15:45:00Z",
+    "physicalQuantities": [
+      {
+        "value": 12.10432,
+        "unit": "C",
+        "qualityCode": 0,
+        "qcAppliedCode": 0,
+        "qcResultCode": 0,
+        "submissionDateTime": "2017-09-15T16:10:46.6243418Z",
+        "sourceId": "DocumentDbMeasurementTransformer"
+      }
+    ]
+  },
+  {
+    "name": "TemperatureAirTsAvg",
+    "measurementDateTime": "2017-09-15T16:00:00Z",
+    "physicalQuantities": [
+      {
+        "value": 12.29931,
+        "unit": "C",
+        "qualityCode": 0,
+        "qcAppliedCode": 0,
+        "qcResultCode": 0,
+        "submissionDateTime": "2017-09-15T16:10:46.6243418Z",
+        "sourceId": "DocumentDbMeasurementTransformer"
+      }
+    ]
+  },
+  {
+    "name": "TemperatureAirTsAvg",
+    "measurementDateTime": "2017-09-15T16:15:00Z",
+    "physicalQuantities": [
+      {
+        "value": 12.70057,
+        "unit": "C",
+        "qualityCode": 0,
+        "qcAppliedCode": 0,
+        "qcResultCode": 0,
+        "submissionDateTime": "2017-09-15T16:41:09.5576478Z",
+        "sourceId": "DocumentDbMeasurementTransformer"
+      }
+    ]
+  },
+  {
+    "name": "TemperatureAirTsAvg",
+    "measurementDateTime": "2017-09-15T16:30:00Z",
+    "physicalQuantities": [
+      {
+        "value": 12.89014,
+        "unit": "C",
+        "qualityCode": 0,
+        "qcAppliedCode": 0,
+        "qcResultCode": 0,
+        "submissionDateTime": "2017-09-15T16:41:09.5576478Z",
+        "sourceId": "DocumentDbMeasurementTransformer"
+      }
+    ]
+  }
+]

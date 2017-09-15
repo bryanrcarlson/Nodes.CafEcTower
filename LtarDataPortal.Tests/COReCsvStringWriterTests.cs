@@ -73,7 +73,7 @@ namespace LtarDataPortal.Tests
         {
             StringBuilder sb = new StringBuilder();
             sb.AppendLine("LTARSiteAcronym,StationID,DateTime,RecordType,AirTemperature,WindSpeed,WindDirection,RelativeHumidity,Precipitation,AirPressure,PAR,ShortWaveIn,LongWaveIn,BatteryVoltage,LoggerTemperature");
-            sb.AppendLine("CAF,001,2017-10-31T16:00-08:00,L,27.81,3.01,125.90,22.45,0.00,93.33,283.32,,,13.02,29.88");
+            sb.AppendLine("CAF,001,2017-10-31T16:00-08:00,L,27.80702,3.014338,125.9,22.4503,0,93.33482,283.3229,,,13.01541,29.87764");
             return sb.ToString();
         }
 

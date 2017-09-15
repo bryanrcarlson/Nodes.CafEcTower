@@ -19,4 +19,13 @@
     <ProjectReference Include="..\LtarDataPortal\LtarDataPortal.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <None Update="Assets\measurements_real_avgTemp.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Assets\observations_real_avgTemp.csv">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
 </Project>
