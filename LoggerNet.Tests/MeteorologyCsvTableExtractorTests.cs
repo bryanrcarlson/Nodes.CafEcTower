@@ -208,5 +208,20 @@ namespace Nsar.Nodes.CafEcTower.LoggerNet.Tests
             Assert.Equal(actualObservations[1].TIMESTAMP, new DateTime(2017, 06, 20, 19, 30, 0));
             Assert.Equal(actualObservations[2].TIMESTAMP, new DateTime(2017, 06, 21, 7, 15, 0));
         }
+
+        [Fact]
+        public void GetObservations_ContentWithNAN_DoesNotErrorSetsNull()
+        {
+            // Arrange
+            string dataPath = @"Assets/CookEastEcTower_Met_Raw_2017_10_24_0615.dat";
+            MeteorologyCsvTableExtractor sut = new MeteorologyCsvTableExtractor(dataPath);
+
+            // Act
+            List<Observation> actualObs = sut.GetObservations();
+
+            // Assert
+            Assert.Null(actualObs[0].VPD_air);
+            Assert.Null(actualObs[0].RH_Avg);
+        }
     }
 }

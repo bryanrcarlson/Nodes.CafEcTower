@@ -71,14 +71,16 @@ namespace Nsar.Nodes.CafEcTower.LoggerNet.Extract
 
             List<Observation> observations = new List<Observation>();
 
-            using (TextReader sr = new StringReader(trimMetaData(this.fileContent)))
+            using (TextReader sr = new StringReader(cleanNulls(trimMetaData(this.fileContent))))
             {
+
                 CsvReader csv = new CsvReader(sr);
                 csv.Configuration.HasHeaderRecord = true;
                 csv.Configuration.IgnoreQuotes = false;
 
+
                 observations = csv.GetRecords<Observation>().ToList();
-                
+
             }
 
             // Datetimes were in unknown timezone (most likely PST, or UTC-08), so convert to UTC
@@ -156,6 +158,13 @@ namespace Nsar.Nodes.CafEcTower.LoggerNet.Extract
             }
 
             return trimmed.ToString();
+        }
+
+        private string cleanNulls(string fileContent)
+        {
+            string cleaned = fileContent.Replace("\"NAN\"", String.Empty);
+
+            return cleaned;
         }
     }
 }
