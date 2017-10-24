@@ -29,7 +29,8 @@ namespace Nsar.Nodes.CafEcTower.LtarDataPortal.Load
                     Format = "yyyy-MM-ddTHH:mmzzz"
                 };
 
-                CsvHelper.TypeConversion.TypeConverterOptionsFactory.AddOptions<DateTimeOffset>(formatDateTimeOffset);
+                TypeConverterOptionsFactory.AddOptions<DateTimeOffset>(formatDateTimeOffset);
+                //csvWriter.Context.WriterConfiguration.TypeConverterOptionsCache.AddOptions<DateTimeOffset>(formatDateTimeOffset);
                 //CsvHelper.TypeConversion.TypeConverterFactory.AddConverter<Decimal?>(new MyDecimalConverter());
 
                 csvWriter.WriteRecords(sortedObservations);
@@ -89,24 +90,6 @@ namespace Nsar.Nodes.CafEcTower.LtarDataPortal.Load
             string fileExtension = "csv";
 
             string result = $"{siteAcronym}{measurementFlag}{stationID}{recordType}_{formatVersion}_{year}{month}{day}_{fileCount}.{fileExtension}";
-
-            return result;
-        }
-    }
-
-    public class MyDecimalConverter : DefaultTypeConverter
-    {
-        public override string ConvertToString(TypeConverterOptions options, object value)
-        {
-            if (value == null)
-            {
-                return string.Empty;
-            }
-
-            Decimal val = (decimal)value;
-
-            string result = val.ToString("0.00");
-
 
             return result;
         }
