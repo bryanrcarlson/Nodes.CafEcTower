@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Nsar.Nodes.Models.LoggerNet.Meteorology;
+using Nsar.Nodes.Models.LoggerNet.TOA5;
 using Newtonsoft.Json.Linq;
 
 namespace Nsar.Nodes.CafEcTower.LoggerNet.Mappers

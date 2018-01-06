@@ -1,4 +1,4 @@
-﻿using Nsar.Nodes.Models.LoggerNet.Meteorology;
+﻿using Nsar.Nodes.Models.LoggerNet.TOA5;
 using System;
 using System.Collections.Generic;
 using System.Linq;

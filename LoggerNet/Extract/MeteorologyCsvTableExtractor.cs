@@ -1,5 +1,6 @@
 ﻿using CsvHelper;
-using Nsar.Nodes.Models.LoggerNet.Meteorology;
+using Nsar.Nodes.Models.LoggerNet.TOA5;
+using Nsar.Nodes.Models.LoggerNet.TOA5.DataTables;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -65,11 +66,11 @@ namespace Nsar.Nodes.CafEcTower.LoggerNet.Extract
             this.utcOffset = utcOffset;
         }
 
-        public List<Observation> GetObservations()
+        public List<T> GetObservations<T>() where T : IObservation
         {
             if (this.fileContent.Length <= 0) throw new Exception("No content");
 
-            List<Observation> observations = new List<Observation>();
+            List<T> observations = new List<T>();
 
             using (TextReader sr = new StringReader(cleanNulls(trimMetaData(this.fileContent))))
             {
@@ -79,12 +80,12 @@ namespace Nsar.Nodes.CafEcTower.LoggerNet.Extract
                 csv.Configuration.IgnoreQuotes = false;
 
 
-                observations = csv.GetRecords<Observation>().ToList();
+                observations = csv.GetRecords<T>().ToList();
 
             }
 
             // Datetimes were in unknown timezone (most likely PST, or UTC-08), so convert to UTC
-            foreach(Observation obs in observations)
+            foreach(IObservation obs in observations)
             {
                 obs.TIMESTAMP = new DateTime(obs.TIMESTAMP.AddHours((-1 * utcOffset)).Ticks, DateTimeKind.Utc);
             }
@@ -134,12 +135,14 @@ namespace Nsar.Nodes.CafEcTower.LoggerNet.Extract
             return md;
         }
 
-        public Meteorology GetMeteorology()
+        public TOA5 GetMeteorology()
         {
-            Meteorology met = new Meteorology();
+            TOA5 met = new TOA5();
 
             met.Metadata = GetMetadata();
-            met.Observations = GetObservations();
+            //List<Meteorology> obs = GetObservations<Meteorology>();
+
+            met.Observations = GetObservations<Meteorology>().Cast<IObservation>().ToList();
 
             return met;
         }

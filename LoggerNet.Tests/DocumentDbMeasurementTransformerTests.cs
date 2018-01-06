@@ -2,8 +2,9 @@
 using System.Collections.Generic;
 using Xunit;
 using Nsar.Nodes.Models.DocumentDb.Measurement;
-using Nsar.Nodes.Models.LoggerNet.Meteorology;
+using Nsar.Nodes.Models.LoggerNet.TOA5;
 using System;
+using Nsar.Nodes.Models.LoggerNet.TOA5.DataTables;
 
 namespace Nsar.Nodes.CafEcTower.LoggerNet.Tests
 {
@@ -122,12 +123,12 @@ namespace Nsar.Nodes.CafEcTower.LoggerNet.Tests
                 expectedMeasurement_PAR_density_Avg.SchemaVersion);
         }
 
-        private Meteorology GetMockMeteorology()
+        private TOA5 GetMockMeteorology()
         {
-            Meteorology met = new Meteorology();
+            TOA5 met = new TOA5();
 
-            met.Observations = new List<Observation>();
-            met.Observations.Add(new  Observation()
+            met.Observations = new List<IObservation>();
+            met.Observations.Add(new  Meteorology()
             {
                 TIMESTAMP = new System.DateTime(2017, 6, 20, 11, 30, 00),
                 RECORD = 15,

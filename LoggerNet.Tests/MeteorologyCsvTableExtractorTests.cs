@@ -1,8 +1,10 @@
 using Xunit;
 using Nsar.Nodes.CafEcTower.LoggerNet.Extract;
 using System.Collections.Generic;
-using Nsar.Nodes.Models.LoggerNet.Meteorology;
+using Nsar.Nodes.Models.LoggerNet.TOA5;
 using System;
+using Nsar.Nodes.Models.LoggerNet.TOA5.DataTables;
+using System.Linq;
 
 namespace Nsar.Nodes.CafEcTower.LoggerNet.Tests
 {
@@ -36,9 +38,9 @@ namespace Nsar.Nodes.CafEcTower.LoggerNet.Tests
         public void GetObservations_ValidContent_ReturnsCorrectObservations()
         {
             //# Arrange
-            List<Observation> actualObservations = new List<Observation>();
+            List<IObservation> actualObservations = new List<IObservation>();
 
-            Observation expectedRecord = new Observation()
+            Meteorology expectedRecord = new Meteorology()
             {
                 TIMESTAMP = new System.DateTime(2017, 6, 20, 11, 30, 00),
                 RECORD = 15,
@@ -58,13 +60,20 @@ namespace Nsar.Nodes.CafEcTower.LoggerNet.Tests
 
             //# Act
             MeteorologyCsvTableExtractor sut = new MeteorologyCsvTableExtractor(pathToFileWithValidContent);
-            actualObservations = sut.GetObservations();
+            actualObservations = sut.GetObservations<Meteorology>().Cast<IObservation>().ToList();
 
             //# Assert
             // TODO: Override obj.Equals for better test
-            Assert.Equal(expectedRecord.amb_tmpr_Avg, actualObservations[1].amb_tmpr_Avg);
+
+            Assert.Equal(expectedRecord.amb_tmpr_Avg, actualObservations[1]
+                .GetType()
+                .GetProperty("amb_tmpr_Avg")
+                .GetValue(actualObservations[1], null));
             Assert.Equal(expectedRecord.RECORD, actualObservations[1].RECORD);
-            Assert.Equal(expectedRecord.Rn_meas_Avg, actualObservations[1].Rn_meas_Avg);
+            Assert.Equal(expectedRecord.Rn_meas_Avg, actualObservations[1]
+                .GetType()
+                .GetProperty("Rn_meas_Avg")
+                .GetValue(actualObservations[1], null));
         }
         
         [Fact]
@@ -197,11 +206,11 @@ namespace Nsar.Nodes.CafEcTower.LoggerNet.Tests
         public void GetObservations_AdjustedTimezone_ReturnsCorrectTimes()
         {
             //# Arrange
-            List<Observation> actualObservations = new List<Observation>();
+            List<IObservation> actualObservations = new List<IObservation>();
 
             //# Act
             MeteorologyCsvTableExtractor sut = new MeteorologyCsvTableExtractor(pathToFileToTestTimeZone, -8);
-            actualObservations = sut.GetObservations();
+            actualObservations = sut.GetObservations<Meteorology>().Cast<IObservation>().ToList();
 
             //# Assert
             Assert.Equal(actualObservations[0].TIMESTAMP, new DateTime(2017, 06, 20, 8, 30, 0));
@@ -217,11 +226,20 @@ namespace Nsar.Nodes.CafEcTower.LoggerNet.Tests
             MeteorologyCsvTableExtractor sut = new MeteorologyCsvTableExtractor(dataPath);
 
             // Act
-            List<Observation> actualObs = sut.GetObservations();
+            List<IObservation> actualObs = sut.GetObservations<Meteorology>()
+                .Cast<IObservation>()
+                .ToList();
 
             // Assert
-            Assert.Null(actualObs[0].VPD_air);
-            Assert.Null(actualObs[0].RH_Avg);
+            //            //observation.GetType().GetProperty(variable.FieldName).GetValue(observation, null)
+            Assert.Null(actualObs[0]
+                .GetType()
+                .GetProperty("VPD_air")
+                .GetValue(actualObs[0], null));
+            Assert.Null(actualObs[0]
+                .GetType()
+                .GetProperty("RH_Avg")
+                .GetValue(actualObs[0], null));
         }
     }
 }

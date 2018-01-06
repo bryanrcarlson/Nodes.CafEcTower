@@ -1,7 +1,6 @@
 ﻿using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
-//using Nsar.Common.Measure.Models;
-using Nsar.Nodes.Models.LoggerNet.Meteorology;
+using Nsar.Nodes.Models.LoggerNet.TOA5;
 using Nsar.Nodes.Models.DocumentDb.Measurement;
 using System;
 using System.Collections.Generic;
@@ -36,11 +35,11 @@ namespace Nsar.Nodes.CafEcTower.LoggerNet.Transform
             this.map = map;
         }
 
-        public List<Measurement> ToMeasurements(Meteorology meteorology)
+        public List<Measurement> ToMeasurements(TOA5 meteorology)
         {
             List<Measurement> measurements = new List<Measurement>();
 
-            foreach(Observation obs in meteorology.Observations)
+            foreach(IObservation obs in meteorology.Observations)
             {
                 foreach (Variable variable in meteorology.Metadata.Variables)
                 {
@@ -57,7 +56,7 @@ namespace Nsar.Nodes.CafEcTower.LoggerNet.Transform
             return measurements;
         }
 
-        private Measurement CreateMeasurementFromVariable(Variable variable, Observation observation, Metadata metadata)
+        private Measurement CreateMeasurementFromVariable(Variable variable, IObservation observation, Metadata metadata)
         {
             // Look up property based on string, get value
             var value = observation.GetType().GetProperty(variable.FieldName).GetValue(observation, null);
