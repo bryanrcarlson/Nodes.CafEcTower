@@ -8,12 +8,12 @@ using System.Linq;
 
 namespace Nsar.Nodes.CafEcTower.LoggerNet.Tests
 {
-    public class MeteorologyCsvTableExtractorTests
+    public class TOA5ExtractorTests_Meteorology
     {
         private readonly string pathToFileWithValidContent;
         private readonly string pathToFileToTestTimeZone;
 
-        public MeteorologyCsvTableExtractorTests()
+        public TOA5ExtractorTests_Meteorology()
         {
             pathToFileWithValidContent = @"Assets/CookEastEcTower_Met_Raw_2017_06_20_1115.dat";
             pathToFileToTestTimeZone = @"Assets/CookEastEcTower_Met_Raw_TestTimeZone.dat";

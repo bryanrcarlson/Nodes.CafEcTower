@@ -12,6 +12,8 @@ namespace Nsar.Nodes.CafEcTower.LoggerNet.Extract
     /// <summary>
     /// Represents an extractor for a comma seperated .dat file generated from the "LTAR_Met" table by LoggerNet Admin.
     /// </summary>
+    /// <note>This is obsolete, please use TOA5Extractor instead</note>
+    [Obsolete("Please use TOA5Extractor instead", true)]
     public class MeteorologyCsvTableExtractor
     {
         private readonly string fileName;
