@@ -27,7 +27,7 @@ namespace Nsar.Nodes.CafEcTower.LoggerNet.Tests
             int expectedContentLength = 710;
 
             //# Act
-            MeteorologyCsvTableExtractor sut = new MeteorologyCsvTableExtractor(pathToFileWithValidContent);
+            TOA5Extractor sut = new TOA5Extractor(pathToFileWithValidContent);
 
             //# Assert
             Assert.Equal(expectedFileName, sut.FileName);
@@ -59,7 +59,7 @@ namespace Nsar.Nodes.CafEcTower.LoggerNet.Tests
             };
 
             //# Act
-            MeteorologyCsvTableExtractor sut = new MeteorologyCsvTableExtractor(pathToFileWithValidContent);
+            TOA5Extractor sut = new TOA5Extractor(pathToFileWithValidContent);
             actualObservations = sut.GetObservations<Meteorology>().Cast<IObservation>().ToList();
 
             //# Assert
@@ -182,7 +182,7 @@ namespace Nsar.Nodes.CafEcTower.LoggerNet.Tests
             };
 
             //# Act
-            MeteorologyCsvTableExtractor sut = new MeteorologyCsvTableExtractor(pathToFileWithValidContent);
+            TOA5Extractor sut = new TOA5Extractor(pathToFileWithValidContent);
             actualMetadata = sut.GetMetadata();
 
             //# Assert
@@ -209,7 +209,7 @@ namespace Nsar.Nodes.CafEcTower.LoggerNet.Tests
             List<IObservation> actualObservations = new List<IObservation>();
 
             //# Act
-            MeteorologyCsvTableExtractor sut = new MeteorologyCsvTableExtractor(pathToFileToTestTimeZone, -8);
+            TOA5Extractor sut = new TOA5Extractor(pathToFileToTestTimeZone, -8);
             actualObservations = sut.GetObservations<Meteorology>().Cast<IObservation>().ToList();
 
             //# Assert
@@ -223,7 +223,7 @@ namespace Nsar.Nodes.CafEcTower.LoggerNet.Tests
         {
             // Arrange
             string dataPath = @"Assets/CookEastEcTower_Met_Raw_2017_10_24_0615.dat";
-            MeteorologyCsvTableExtractor sut = new MeteorologyCsvTableExtractor(dataPath);
+            TOA5Extractor sut = new TOA5Extractor(dataPath);
 
             // Act
             List<IObservation> actualObs = sut.GetObservations<Meteorology>()
