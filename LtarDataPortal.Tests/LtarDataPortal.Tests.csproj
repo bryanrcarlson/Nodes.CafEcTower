@@ -1,8 +1,8 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>netcoreapp2.0</TargetFramework>
-
+    <TargetFrameworks>net461</TargetFrameworks>
+    <RootNamespace>Nsar.Nodes.CafEcTower.LtarDataPortal.Tests</RootNamespace>
     <IsPackable>false</IsPackable>
   </PropertyGroup>
 
